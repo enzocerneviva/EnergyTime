@@ -1,0 +1,1 @@
+# Comunicação com o Carregador Elétrico GoodWe caso não precise do ESP32
