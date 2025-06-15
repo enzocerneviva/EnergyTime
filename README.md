@@ -8,7 +8,7 @@ Desenvolver uma solução automatizada que permita ao usuário configurar e moni
 - Preferências personalizadas salvas em banco de dados.
 - **Leitura e análise em tempo real dos dados do inversor solar**, permitindo estimar a melhor janela de carregamento com base na eficiência da geração solar e nos dados de consumo.
 
-## 🔋 2. Organização Github
+## 2. Organização Github
 
 projeto-alexa-carregador/
 │
