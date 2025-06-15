@@ -11,32 +11,28 @@ Desenvolver uma solução automatizada que permita ao usuário configurar e moni
 ## 2. Organização Github
 
 projeto-alexa-carregador/
-│
-├── README.md
-├── requirements.txt
-├── .env.example
-├── .gitignore
-│
-├── backend/
-│ ├── main.py ← Roteador principal
-│ ├── alexa_skill.py ← Integração Alexa
-│ ├── weather.py ← Dados climáticos
-│ ├── goodwe.py ← Comunicação com API da GoodWe
-│ ├── ia_engine.py ← Motor de decisão com IA
-│ └── hardware_interface/ ← Camada de abstração de hardware
-│ ├── init.py ← Escolhe dinamicamente o adaptador (ESP32 ou API)
-│ ├── esp32_adapter.py ← Comunicação via MQTT com ESP32 (opcional)
-│ └── api_adapter.py ← Comunicação via API ou simulação local
-│
-├── esp32/ ← (Opcional: código embarcado para ESP32)
-│ └── main.ino ← Código do ESP32 com controle via MQTT
-│
-├── tests/ ← Testes unitários e mocks
-│ └── test_main.py
-│
-└── docs/ ← Documentação geral do projeto
-├── arquitetura.png ← Diagrama geral do sistema
-└── fluxo_decisao.md ← Fluxo lógico de decisão da IA
+- README.md
+- requirements.txt
+- .env.example
+- .gitignore
+- backend/
+  - main.py ← Roteador principal
+  - alexa_skill.py ← Integração Alexa
+  - weather.py ← Dados climáticos
+  - goodwe.py ← Comunicação com API da GoodWe
+  - ia_engine.py ← Motor de decisão com IA
+  - hardware_interface/
+    - __init__.py ← Escolhe dinamicamente o adaptador (ESP32 ou API)
+    - esp32_adapter.py ← Comunicação via MQTT com ESP32 (opcional)
+    - api_adapter.py ← Comunicação via API ou simulação local
+- esp32/ ← (Opcional: código embarcado para ESP32)
+  - main.ino ← Código do ESP32 com controle via MQTT
+- tests/ ← Testes unitários e mocks
+  - test_main.py
+- docs/ ← Documentação geral do projeto
+- arquitetura.png ← Diagrama geral do sistema
+- fluxo_decisao.md ← Fluxo lógico de decisão da IA
+
 
 ## 🔋 3. Aplicações de Energia Renovável e Tecnologias Inteligentes
 
