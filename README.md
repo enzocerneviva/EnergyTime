@@ -39,7 +39,6 @@ projeto-alexa-carregador/
     └── fluxo_decisao.md      ← Fluxo lógico de decisão da IA
 
 
-
 ## 🔋 3. Aplicações de Energia Renovável e Tecnologias Inteligentes
 
 ### Sustentabilidade Ambiental
