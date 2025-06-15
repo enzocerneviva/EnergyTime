@@ -1,7 +1,84 @@
 # EnergyTime | Challenge 1° Semestre
 
-### 🔍 1. Introdução
-Este projeto inicialmente tem como objetivo integrar os carregadores veiculares da marca GoodWe com sistemas de automação residencial, especificamente com a Alexa, a fim de otimizar o processo de carregamento veicular. A otimização se baseia em condições externas (como previsão de queda de energia) e preferências do usuário, utilizando um atendimento programado com inteligência artificial (IA), desenvolvido em Python e API’s com outras linguagens com uso de bases de dados dinâmicas.
+## 🎯 1. Objetivo Geral
 
-### 🎯 2. Objetivo Geral
-Desenvolver uma solução que permita que usuários configurem e monitorem o carregamento de seus veículos elétricos via comandos na Alexa, com base em dados preditivos (como previsão do tempo) e inteligência artificial.
+Desenvolver uma solução automatizada que permita ao usuário configurar e monitorar o carregamento de veículos elétricos via comandos na Alexa, com base em:
+
+- Dados preditivos como clima e possíveis quedas de energia.
+- Preferências personalizadas salvas em banco de dados.
+- **Leitura e análise em tempo real dos dados do inversor solar**, permitindo estimar a melhor janela de carregamento com base na eficiência da geração solar e nos dados de consumo.
+
+## 🔋 2. Organização Github
+
+projeto-alexa-carregador/
+│
+├── README.md
+├── requirements.txt
+├── .env.example
+├── .gitignore
+│
+├── backend/
+│   ├── main.py               ← Roteador principal
+│   ├── alexa_skill.py        ← Integração Alexa
+│   ├── weather.py            ← Dados climáticos
+│   ├── goodwe.py             ← Comunicação com API da GoodWe
+│   ├── ia_engine.py          ← Motor de decisão com IA
+│   └── hardware_interface/   ← Camada de abstração de hardware
+│       ├── __init__.py       ← Escolhe dinamicamente o adaptador (ESP32 ou API)
+│       ├── esp32_adapter.py  ← Comunicação via MQTT com ESP32 (opcional)
+│       └── api_adapter.py    ← Comunicação via API ou simulação local
+│
+├── esp32/                    ← (Opcional: código embarcado para ESP32)
+│   └── main.ino              ← Código do ESP32 com controle via MQTT
+│
+├── tests/                    ← Testes unitários e mocks
+│   └── test_main.py
+│
+└── docs/                     ← Documentação geral do projeto
+    ├── arquitetura.png       ← Diagrama geral do sistema
+    └── fluxo_decisao.md      ← Fluxo lógico de decisão da IA
+
+
+
+## 🔋 3. Aplicações de Energia Renovável e Tecnologias Inteligentes
+
+### Sustentabilidade Ambiental
+
+- Redução direta de emissões de CO₂ com uso de energia solar
+- Adoção de práticas mais conscientes com uso automatizado
+
+### Independência Energética
+
+- Geração própria reduz dependência da rede
+- Energia armazenada pode ser usada em situações emergenciais
+
+### Eficiência Energética
+
+- Com a leitura do inversor, é possível:
+    - Otimizar horários de carregamento com base na geração solar
+    - Evitar sobrecargas e desperdícios
+    - Detectar falhas no sistema de geração
+- Decisões inteligentes com IA permitem reduzir perdas
+
+### Automação Residencial/Industrial
+
+- Controle por comandos de voz com Alexa
+- Monitoramento contínuo do desempenho dos equipamentos
+
+---
+
+## ⚠️ 4. Possíveis Desafios
+
+- Limitações no acesso à API oficial da GoodWe (conta corporativa exigida)
+- Restrições de segurança da Alexa em comandos automatizados
+- Precisão das previsões climáticas
+- Segurança e criptografia dos dados sensíveis
+- Treinamento eficaz da IA com bases realistas
+
+---
+
+## ✅ 5. Conclusão
+
+A integração entre os equipamentos da GoodWe, a assistente Alexa e sistemas inteligentes abre novas possibilidades para automação sustentável e consciente. Utilizar dados climáticos, informações do inversor e IA para otimizar o carregamento veicular pode tornar o consumo energético mais eficiente, econômico e ecológico.
+
+Com uma equipe organizada, acesso à documentação técnica e boas práticas de programação, este projeto tem potencial real de aplicação em residências inteligentes e, futuramente, até em ambientes corporativos ou industriais, contribuindo para a transição energética global.
