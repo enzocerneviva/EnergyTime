@@ -1,6 +1,5 @@
 from weather import get_weather
 
-cidade = "São Paulo"
 clima = get_weather()
 
 

@@ -38,6 +38,11 @@ def get_weather():
     temperatura = 0
     umidade = 0
     vento = 0
+
+    precipitacao2 = 0
+    temperatura2 = 0
+    umidade2 = 0
+    vento2 = 0
     
     #& Previsão do dia atual
 
@@ -76,9 +81,21 @@ def get_weather():
         "vento": vento
     }})
 
-    print(result)
+    for j in range(i + 1, i + 9, 1):
 
-    for j in range(i , i + 8, 1):
-        print(lista[j]["dt_txt"])
+        prev2 = lista[j]
+        precipitacao2 += lista[j].get("rain", {}).get("3h", 0)
+        temperatura2 += prev2["main"]["temp"]
+        umidade2 += prev2["main"]["humidity"]
+        vento2 += prev2["wind"]["speed"]
 
-get_weather()
+    result.append({
+    "tomorrow": {
+        "precipitacao": precipitacao,
+        "temperatura": temperatura,
+        "umidade": umidade,
+        "vento": vento
+        } 
+    })
+
+    return result
