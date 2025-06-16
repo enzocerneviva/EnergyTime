@@ -38,12 +38,12 @@ def get_weather():
     temperatura = 0
     umidade = 0
     vento = 0
-
+    
     precipitacao2 = 0
     temperatura2 = 0
     umidade2 = 0
     vento2 = 0
-    
+
     #& Previsão do dia atual
 
     lista = dados["list"]
