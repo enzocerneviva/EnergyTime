@@ -12,7 +12,6 @@ Desenvolver uma solução automatizada que permita ao usuário configurar e moni
 
 projeto-alexa-carregador/
 - README.md
-- requirements.txt
 - .env.example
 - .gitignore
 - backend/
