@@ -12,7 +12,6 @@ Desenvolver uma solução automatizada que permita ao usuário configurar e moni
 
 projeto-alexa-carregador/
 - README.md
-- requirements.txt
 - .env.example
 - .gitignore
 - backend/
@@ -27,12 +26,6 @@ projeto-alexa-carregador/
     - api_adapter.py ← Comunicação via API ou simulação local
 - esp32/ ← (Opcional: código embarcado para ESP32)
   - main.ino ← Código do ESP32 com controle via MQTT
-- tests/ ← Testes unitários e mocks
-  - test_main.py
-- docs/ ← Documentação geral do projeto
-- arquitetura.png ← Diagrama geral do sistema
-- fluxo_decisao.md ← Fluxo lógico de decisão da IA
-
 
 ## 🔋 3. Aplicações de Energia Renovável e Tecnologias Inteligentes
 
