@@ -9,7 +9,7 @@ dotenv_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env')
 load_dotenv(dotenv_path) 
 
 lat = -23.5489
-lon = -23.5489
+lon = -46.6388
 
 API_KEY = os.getenv("OPENWEATHER_API_KEY")
 BASE_URL = f"https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API_KEY}&units=metric"
