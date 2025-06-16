@@ -1,3 +1,11 @@
 .env
-./backend/_pycache_
-./vscode
+
+# Arquivos compilados do Python
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+
+# Configurações de IDEs
+.vscode/
+.idea/
