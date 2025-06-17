@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from backend.goodwe import carregar_carro  # ou qualquer outro nome correto
+from backend.goodwe import *
 
 app = Flask(__name__)
 
@@ -48,3 +48,5 @@ def alexa_webhook():
         }
     })
 
+if __name__ == "__main__":
+    app.run(debug=True, port=5000)
