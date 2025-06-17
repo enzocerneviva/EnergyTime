@@ -69,4 +69,3 @@ if __name__ == '__main__':
         print(f"  → Dados climáticos: {info['dados_climaticos']}")
         print(f"  → Queda de energia prevista: {'Sim' if info['queda_de_energia'] == 1 else 'Não'}\n")
 
-
