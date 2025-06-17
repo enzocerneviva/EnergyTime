@@ -18,6 +18,7 @@ def alexa_webhook():
 
             if intent_name == "StartChargingIntent":
                 carregar_carro()
+                print("Carregando o carro")
                 resposta_texto = "Carregamento iniciado com sucesso."
 
             elif intent_name == "StopChargingIntent":
