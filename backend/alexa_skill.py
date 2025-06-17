@@ -19,7 +19,7 @@ def tratar_requisicao_alexa(dados):
                 resposta_texto = "Carregamento parado com segurança."
 
             elif intent_name == "CheckWeatherIntent":
-                resposta_texto = informar_analise_hoje()
+                resposta_texto = informar_analise_hoje() + informar_analise_amanha()
 
             else:
                 resposta_texto = "Desculpe, não entendi seu comando."
