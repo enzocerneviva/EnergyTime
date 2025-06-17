@@ -8,26 +8,36 @@ def alexa_webhook():
     dados = request.get_json()
 
     try:
-        intent_name = dados["request"]["intent"]["name"]
+        tipo_requisicao = dados["request"]["type"]
 
-        if intent_name == "StartChargingIntent":
-            carregar_carro()
-            resposta_texto = "Carregamento iniciado com sucesso."
+        if tipo_requisicao == "LaunchRequest":
+            resposta_texto = "Bem-vindo! Pode me pedir para iniciar ou parar o carregamento."
 
-        elif intent_name == "StopChargingIntent":
-            resposta_texto = "Carregamento parado com segurança."
+        elif tipo_requisicao == "IntentRequest":
+            intent_name = dados["request"]["intent"]["name"]
 
-        elif intent_name == "CheckWeatherIntent":
-            resposta_texto = "A temperatura está X graus celsius."
+            if intent_name == "StartChargingIntent":
+                carregar_carro()
+                resposta_texto = "Carregamento iniciado com sucesso."
+
+            elif intent_name == "StopChargingIntent":
+                resposta_texto = "Carregamento parado com segurança."
+
+            elif intent_name == "CheckWeatherIntent":
+                resposta_texto = "A temperatura está X graus Celsius."
+
+            else:
+                resposta_texto = "Desculpe, não entendi seu comando."
 
         else:
-            resposta_texto = "Desculpe, não entendi seu comando."
+            resposta_texto = "Solicitação desconhecida."
 
     except Exception as e:
-        print("Erro:", e)
+        import traceback
+        traceback.print_exc()
         resposta_texto = "Houve um erro ao processar sua solicitação."
 
-    resposta = {
+    return jsonify({
         "version": "1.0",
         "response": {
             "outputSpeech": {
@@ -36,12 +46,5 @@ def alexa_webhook():
             },
             "shouldEndSession": True
         }
-    }
-
-    return jsonify(resposta)
-
-if __name__ == "__main__":
-    import os
-    port = int(os.environ.get("PORT", 10000))
-    app.run(host="0.0.0.0", port=port)
+    })
 
