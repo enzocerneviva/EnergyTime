@@ -1,10 +1,16 @@
-from flask import Flask
-from alexa_skill import alexa_webhook  # importa a função pronta
+from flask import Flask, request, jsonify
+from alexa_skill import tratar_requisicao_alexa  # Função que vai processar a requisição Alexa
 
 app = Flask(__name__)
-app.add_url_rule("/alexa", view_func=alexa_webhook, methods=["POST"])
+
+@app.route("/alexa", methods=["POST"])
+def alexa_webhook():
+    dados = request.get_json()
+    resposta = tratar_requisicao_alexa(dados)  # Chama a função da skill passando os dados
+    return jsonify(resposta)
 
 if __name__ == "__main__":
-    from os import getenv
-    port = int(getenv("PORT", 5000))
+    import os
+    port = int(os.environ.get("PORT", 10000))
     app.run(host="0.0.0.0", port=port)
+
