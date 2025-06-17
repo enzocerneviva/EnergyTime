@@ -1,10 +1,9 @@
 from flask import Flask, request, jsonify
 from goodwe import *
-app = Flask(__name__)
- 
+
 # -- Define a rota "/alexa" que aceita requisições "POST" da Alexa Skills --
- 
-@app.route("/alexa", methods=["POST"])
+# @app.route("/alexa", methods=["POST"])
+
 def alexa_webhook():
             # Pega o JSON enviado pela Alexa na requisição HTTP
     dados = request.get_json()
@@ -15,7 +14,7 @@ def alexa_webhook():
  
         # Verifica qual intent foi recebida e define a resposta de voz correspondente
         if intent_name == "StartChargingIntent":
-            carregarcarro()
+            carregar_carro()
             resposta_texto = "Carregamento iniciado com sucesso."
  
         elif intent_name == "StopChargingIntent":
@@ -49,6 +48,3 @@ def alexa_webhook():
     # Verifica qual tipo de resultado o usuário quer saber
 
     return jsonify(resposta)
- 
-if __name__ == "__main__":
-    app.run(debug=True, port=5000)
