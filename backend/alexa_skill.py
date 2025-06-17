@@ -1,58 +1,50 @@
+from flask import Flask, request, jsonify
+from goodwe import *
 
-#? ==========================================
-#? alexa_skill.py - Integração com Alexa
-#? ==========================================
+# -- Define a rota "/alexa" que aceita requisições "POST" da Alexa Skills --
+# @app.route("/alexa", methods=["POST"])
 
-#? Este arquivo é responsável por lidar com as requisições vindas da Skill da Alexa.
-#? A Skill envia comandos como "iniciar carregamento", "parar carregamento" etc.
-#? Aqui processamos o JSON recebido, identificamos a intent e geramos a resposta de voz.
+def alexa_webhook():
+            # Pega o JSON enviado pela Alexa na requisição HTTP
+    dados = request.get_json()
+ 
+    try:
+        # Extrai o nome da intent enviada pela Alexa
+        intent_name = dados["request"]["intent"]["name"]
+ 
+        # Verifica qual intent foi recebida e define a resposta de voz correspondente
+        if intent_name == "StartChargingIntent":
+            carregar_carro()
+            resposta_texto = "Carregamento iniciado com sucesso."
+ 
+        elif intent_name == "StopChargingIntent":
+            resposta_texto = "Carregamento parado com segurança."
+ 
+        elif intent_name == "CheckWeatherIntent":
+            resposta_texto = "A temperatura está X graus celcius"
+ 
+        else:
+            # Caso a intent seja desconhecida, responde com mensagem padrão
+            resposta_texto = "Desculpe, não entendi seu comando."
+ 
+    except Exception as e:
+        # Se ocorrer algum erro (ex: JSON mal formatado), imprime o erro no console
+        print("Erro:", e)
+        # Define uma resposta de erro para a Alexa falar
+        resposta_texto = "Houve um erro ao processar sua solicitação."
+ 
+    # Monta o JSON que será enviado de volta para a Alexa
+    resposta = {
+        "version": "1.0",  # Versão da API Alexa
+        "response": {
+            "outputSpeech": {
+                "type": "PlainText",  # Tipo de fala: texto simples
+                "text": resposta_texto  # Texto que a Alexa vai falar
+            },
+            "shouldEndSession": True  # Indica que a sessão deve ser encerrada após essa resposta
+        }
+    }
+ 
+    # Verifica qual tipo de resultado o usuário quer saber
 
-#? Estrutura básica da integração:
-#? -------------------------------
-#? 1. Receber uma requisição POST da Alexa (endpoint configurado no Developer Console)
-#? 2. Verificar qual intent foi enviada (ex: IniciarCarregamentoIntent)
-#? 3. Executar a ação correspondente (ex: chamar função que ativa carregamento)
-#? 4. Retornar uma resposta JSON no formato aceito pela Alexa
-
-#? Principais Intents Esperadas:
-#? -----------------------------
-#? - IniciarCarregamentoIntent: ativa o carregamento veicular
-#? - PararCarregamentoIntent: desativa o carregamento
-#? - StatusEnergiaIntent: informa ao usuário o estado atual (carregando ou não)
-
-#? Exemplo de estrutura JSON recebida:
-#? {
-#?   "request": {
-#?     "type": "IntentRequest",
-#?     "intent": {
-#?       "name": "IniciarCarregamentoIntent"
-#?     }
-#?   }
-#? }
-
-#? Exemplo de resposta esperada pela Alexa:
-#? {
-#?   "version": "1.0",
-#?   "response": {
-#?     "outputSpeech": {
-#?       "type": "PlainText",
-#?       "text": "Carregamento iniciado com energia limpa!"
-#?     },
-#?     "shouldEndSession": true
-#?   }
-#? }
-
-#? Funções esperadas neste arquivo:
-#? --------------------------------
-#? - handle_intent(intent_name): interpreta a intent recebida e gera a resposta.
-#? - build_response(text): cria o JSON de resposta no formato da Alexa.
-#? - alexa_webhook(request): endpoint que lida com requisições HTTP da Alexa.
-
-#? Observação:
-#? -----------
-#? - A autenticação e validação da requisição (signature, timestamp) são importantes em produção.
-#? - Para testes, essas validações podem ser desativadas no Developer Console.
-
-#? ==========================================
-#? Fim da explicação sobre a integração Alexa
-#? ==========================================
+    return jsonify(resposta)
