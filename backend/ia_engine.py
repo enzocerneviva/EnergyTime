@@ -66,16 +66,14 @@ resultados = prever_risco_com_previsao()
 def informar_analise_hoje():
     for dia, info in resultados.items():
         s_dia = f" {dia.capitalize()}:"
-        s_dados = f" Dados climáticos: {info['dados_climaticos']}"
         s_queda = f" Queda de energia prevista: {'Sim' if info['queda_de_energia'] == 1 else 'Não'}"
-        return "Previsão de risco com base no clima:" + s_dia + s_dados + s_queda
+        return "Previsão de risco com base no clima:" + s_dia + s_queda
 
 def informar_analise_amanha():
     for dia, info in resultados.items():
         s_dia = f" {dia.capitalize()}:"
-        s_dados = f" Dados climáticos: {info['dados_climaticos']}"
         s_queda = f" Queda de energia prevista: {'Sim' if info['queda_de_energia'] == 1 else 'Não'}\n"
-    return "Previsão de risco com base no clima:" + s_dia + s_dados + s_queda
+    return "Previsão de risco com base no clima:" + s_dia + s_queda
 
 print("\nPrevisão de risco com base no clima:")
 for dia, info in resultados.items():
