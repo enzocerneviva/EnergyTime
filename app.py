@@ -24,8 +24,11 @@ def alexa_webhook():
             resposta_texto = "Desculpe, não entendi seu comando."
 
     except Exception as e:
-        print("Erro:", e)
-        resposta_texto = "Houve um erro ao processar sua solicitação."
+        import traceback
+        traceback.print_exc()  #? Mostra erro detalhado nos logs do Render
+        print("ERRO DETECTADO:", str(e))
+        print("DADOS RECEBIDOS:", dados)
+        resposta_texto = "Houve um problema ao processar sua solicitação."
 
     resposta = {
         "version": "1.0",
