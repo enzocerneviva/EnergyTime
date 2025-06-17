@@ -56,16 +56,31 @@ def prever_risco_com_previsao():
     return resultados
 
 #? 5. Execução direta para teste
-if __name__ == '__main__':
-    y_pred = modelo.predict(X_test)
-    print("Relatório de Classificação:\n")
-    print(classification_report(y_test, y_pred))
 
-    resultados = prever_risco_com_previsao()
+y_pred = modelo.predict(X_test)
+print("Relatório de Classificação:\n")
+print(classification_report(y_test, y_pred))
 
-    print("\nPrevisão de risco com base no clima:")
+resultados = prever_risco_com_previsao()
+
+def informar_analise_hoje():
     for dia, info in resultados.items():
-        print(f"{dia.capitalize()}:")
-        print(f"  → Dados climáticos: {info['dados_climaticos']}")
-        print(f"  → Queda de energia prevista: {'Sim' if info['queda_de_energia'] == 1 else 'Não'}\n")
+        s_dia = f" {dia.capitalize()}:"
+        s_dados = f" Dados climáticos: {info['dados_climaticos']}"
+        s_queda = f" Queda de energia prevista: {'Sim' if info['queda_de_energia'] == 1 else 'Não'}"
+        return "Previsão de risco com base no clima:" + s_dia + s_dados + s_queda
 
+def informar_analise_amanha():
+    for dia, info in resultados.items():
+        s_dia = f" {dia.capitalize()}:"
+        s_dados = f" Dados climáticos: {info['dados_climaticos']}"
+        s_queda = f" Queda de energia prevista: {'Sim' if info['queda_de_energia'] == 1 else 'Não'}\n"
+    return "Previsão de risco com base no clima:" + s_dia + s_dados + s_queda
+
+print("\nPrevisão de risco com base no clima:")
+for dia, info in resultados.items():
+    print(f"{dia.capitalize()}:")
+    print(f" Dados climáticos: {info['dados_climaticos']}")
+    print(f" Queda de energia prevista: {'Sim' if info['queda_de_energia'] == 1 else 'Não'}\n")
+
+print(informar_analise_hoje() + informar_analise_amanha())

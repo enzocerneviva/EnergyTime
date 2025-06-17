@@ -74,7 +74,7 @@ def get_weather():
     umidade = umidade / (i + 1)
     vento = vento / (i + 1)
 
-    result.append({"today": {
+    result.append({"hoje": {
         "precipitacao": precipitacao,
         "temperatura": temperatura,
         "umidade": umidade,
@@ -90,7 +90,7 @@ def get_weather():
         vento2 += prev2["wind"]["speed"]
 
     result.append({
-    "tomorrow": {
+    "amanhã": {
         "precipitacao": precipitacao,
         "temperatura": temperatura,
         "umidade": umidade,

@@ -1,4 +1,5 @@
-from backend.goodwe import carregar_carro  # ou qualquer função que precise
+from goodwe import carregar_carro  # ou qualquer função que precise
+from ia_engine import informar_analise_hoje, informar_analise_amanha
 
 def tratar_requisicao_alexa(dados):
     try:
@@ -18,7 +19,7 @@ def tratar_requisicao_alexa(dados):
                 resposta_texto = "Carregamento parado com segurança."
 
             elif intent_name == "CheckWeatherIntent":
-                resposta_texto = "A temperatura está X graus celsius."
+                resposta_texto = informar_analise_hoje() + informar_analise_amanha()
 
             else:
                 resposta_texto = "Desculpe, não entendi seu comando."
