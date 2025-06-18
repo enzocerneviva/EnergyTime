@@ -1,5 +1,6 @@
 from goodwe import carregar_carro  # ou qualquer função que precise
 from ia_engine import texto_alexa
+from goodwe import analise_inversor
 
 def tratar_requisicao_alexa(dados):
     try:
@@ -22,7 +23,8 @@ def tratar_requisicao_alexa(dados):
                 resposta_texto = texto_alexa()
 
             elif intent_name == "CheckInversorIntent":
-                resposta_texto = "Esses são os dados obtidos da análise do inversor: "
+                resposta_texto = f"Esses são os dados obtidos da análise do inversor: {analise_inversor()}"
+                print(analise_inversor())
                 
             else:
                 resposta_texto = "Desculpe, não entendi seu comando."

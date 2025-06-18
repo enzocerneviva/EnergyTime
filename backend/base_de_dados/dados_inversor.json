@@ -1,17 +1,19 @@
-{
-  "energia_recebida": 8.7,
-  "energia_convertida": 8.2,
-  "potencia_atual": 3500,
-  "capacidade_maxima": 5000,
-  "rendimento_percentual": 94.25,
-  "energia_hoje": 8.2,
-  "energia_mes": 110.3,
-  "energia_total": 1850.7,
-  "status_operacional": "Operando",
-  "temperatura_inversor": 41.3,
-  "tensao_dc": 480.5,
-  "corrente_dc": 7.3,
-  "tensao_ac": 230.1,
-  "corrente_ac": 15.2,
-  "tempo_atividade_total": 2150
-}
+[
+  {
+    "energia_recebida": 8.7,
+    "energia_convertida": 8.2,
+    "potencia_atual": 3500,
+    "capacidade_maxima": 5000,
+    "rendimento_percentual": 94.25,
+    "energia_hoje": 8.2,
+    "energia_mes": 110.3,
+    "energia_total": 1850.7,
+    "status_operacional": "Operando",
+    "temperatura_inversor": 41.3,
+    "tensao_dc": 480.5,
+    "corrente_dc": 7.3,
+    "tensao_ac": 230.1,
+    "corrente_ac": 15.2,
+    "tempo_atividade_total": 2150
+  }
+]

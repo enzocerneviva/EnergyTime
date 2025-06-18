@@ -10,7 +10,7 @@ from weather import *  #? Importa a função get_weather() existente
 
 #? 1. Carrega base de dados
 caminho_base = os.path.join(os.path.dirname(__file__), 'base_de_dados', 'ocorrencias_queda_de_energia.csv')
-df = pd.read_csv(caminho_base)
+df = pd.read_csv(caminho_base) 
 
 #? 2. Pré-processamento
 df['data'] = pd.to_datetime(df['data'], dayfirst=True)
@@ -76,8 +76,8 @@ def texto_alexa():
 
 #? 5. Execução direta para teste
 
+print("---------- Dados Treinamento de Modelo de Previsão ----------")
+
 y_pred = modelo.predict(X_test)
 print("Relatório de Classificação:\n")
 print(classification_report(y_test, y_pred))
-
-print(prever_risco_com_previsao())
