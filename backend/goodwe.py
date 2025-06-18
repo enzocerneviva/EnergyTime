@@ -11,6 +11,7 @@ def analise_inversor():
 
     print("\nAnalisando dados do inversor...\n")
     result = "Dados obtidos: "
+
     for dado in dados_inversor:
 
         if dado in ["tensao_dc", "corrente_dc", "tensao_ac", "corrente_ac", "tempo_atividade_total"]:
@@ -19,20 +20,20 @@ def analise_inversor():
         for info in dados_inversor[dado]:
 
             if "energia" in dado:
-                result += f"{dado}: {info} quilowatt-hora, "
+                result += f"{dado.replace("_", " ")}: {info} quilowatt-hora, "
                 continue
 
             if "potencia" in dado:
-                result += f"{dado}: {info} watts, "
+                result += f"{dado.replace("_"," ")}: {info} watts, "
                 continue
             
             if "percentual" in dado:
-                result += f"{dado}: {info} %, "
+                result += f"{dado.replace("_"," ")}: {info} %, "
                 continue
                 
-            result += f"{dado}: {info}, "
+            result += f"{dado.replace("_", " ")}: {info}, "
 
     return result
 
 
-print(analise_inversor(), "\n\n")
+print(analise_inversor())
