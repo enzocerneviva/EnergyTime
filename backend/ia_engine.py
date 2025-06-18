@@ -36,8 +36,6 @@ def prever_risco(precipitacao, temperatura, umidade, vento):
 #? 4. Previsão com base nos dados climáticos de hoje e amanhã
 def prever_risco_com_previsao():
     previsao = get_weather()
-    print("Previsão climática recebida:", previsao)
-
     resultados = {}
 
     for dia in previsao:
@@ -48,6 +46,7 @@ def prever_risco_com_previsao():
                 umidade=dados['umidade'],
                 vento=dados['vento']
             )
+
             resultados[chave] = {
                 'dados_climaticos': dados,
                 'queda_de_energia': risco
@@ -55,30 +54,30 @@ def prever_risco_com_previsao():
 
     return resultados
 
+def texto_alexa():
+
+    resultados = prever_risco_com_previsao()
+
+    resultado_hoje = resultados["hoje"]["queda_de_energia"]
+    resultado_amanha = resultados["amanhã"]["queda_de_energia"]
+    
+    saida = "De acordo com a análise climática esses foram os resultados obtidos. "
+
+    if (resultado_amanha and resultado_hoje) == 0:
+        saida += "Previsão para hoje: sem risco de queda de energia. Previsão para amanhã: sem risco de queda de energia"
+    elif resultado_hoje == 0 and resultado_amanha == 1:
+        saida += "Previsão para hoje: sem risco de queda de energia. Previsão para amanhã: risco de queda de enegia"
+    elif resultado_hoje == 1 and resultado_amanha == 0:
+        saida += "Previsão para hoje: risco de queda de enegia. Previsão para amanhã: sem risco de queda de energia"
+    else:
+        saida += "Previsão para hoje: risco de queda de enegia. Previsão para amanhã: risco de queda de enegia"
+
+    return saida
+
 #? 5. Execução direta para teste
 
 y_pred = modelo.predict(X_test)
 print("Relatório de Classificação:\n")
 print(classification_report(y_test, y_pred))
 
-resultados = prever_risco_com_previsao()
-
-def informar_analise_hoje():
-    for dia, info in resultados.items():
-        s_dia = f" {dia.capitalize()}:"
-        s_queda = f" Queda de energia prevista: {'Sim' if info['queda_de_energia'] == 1 else 'Não '}"
-        return "Previsão de risco com base no clima:" + s_dia + s_queda
-
-def informar_analise_amanha():
-    for dia, info in resultados.items():
-        s_dia = f" {dia.capitalize()}:"
-        s_queda = f" Queda de energia prevista: {'Sim' if info['queda_de_energia'] == 1 else 'Não '}\n"
-    return "Previsão de risco com base no clima:" + s_dia + s_queda
-
-print("\nPrevisão de risco com base no clima:")
-for dia, info in resultados.items():
-    print(f"{dia.capitalize()}:")
-    print(f" Dados climáticos: {info['dados_climaticos']}")
-    print(f" Queda de energia prevista: {'Sim' if info['queda_de_energia'] == 1 else 'Não'}\n")
-
-print(informar_analise_hoje() + informar_analise_amanha())
+print(prever_risco_com_previsao())

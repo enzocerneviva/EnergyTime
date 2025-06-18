@@ -1,12 +1,12 @@
 from goodwe import carregar_carro  # ou qualquer função que precise
-from ia_engine import informar_analise_hoje, informar_analise_amanha
+from ia_engine import texto_alexa
 
 def tratar_requisicao_alexa(dados):
     try:
         tipo_requisicao = dados["request"]["type"]
 
         if tipo_requisicao == "LaunchRequest":
-            resposta_texto = "Bem-vindo! Pode me pedir para iniciar ou parar o carregamento."
+            resposta_texto = "Bem-vindo! Você pode me pedir as seguintes funcionalidades: Ligar o carregador do carro, desligue o carregador do carro, analise de queda de energia ou dados do inversor"
 
         elif tipo_requisicao == "IntentRequest":
             intent_name = dados["request"]["intent"]["name"]
@@ -19,8 +19,11 @@ def tratar_requisicao_alexa(dados):
                 resposta_texto = "Carregamento parado com segurança."
 
             elif intent_name == "CheckWeatherIntent":
-                resposta_texto = informar_analise_hoje() + informar_analise_amanha()
+                resposta_texto = texto_alexa()
 
+            elif intent_name == "CheckInversorIntent":
+                resposta_texto = "Esses são os dados obtidos da análise do inversor: "
+                
             else:
                 resposta_texto = "Desculpe, não entendi seu comando."
 
