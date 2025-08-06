@@ -1,1 +1,0 @@
-from base_de_dados import ocorrencias_queda_de_energia
