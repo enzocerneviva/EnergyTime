@@ -43,6 +43,7 @@ EnergyTime/
 ├── README.md           ← Documento explicativo do projeto (você está lendo agora)
 ├── .env.example        ← Arquivo de exemplo com variáveis de ambiente, senhas e acessos
 ├── .gitignore          ← Arquivo para ignorar arquivos não versionados
+├── requirements.txt    ← Arquivo com informações de ferramentas e bibliotecas utilizadas para importação
 |
 └── backend/
     ├── main.py         ← Roteador principal - cria o servidor com rotas HTTPS para comunicação com a Alexa
