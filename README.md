@@ -60,8 +60,6 @@ EnergyTime/
 
 ## 3. Funcionamento
 
-O **EnergyTime** funciona como um sistema integrado que conecta dispositivos GoodWe, dados climáticos e um modelo de inteligência artificial a um assistente virtual (Alexa).  
-
 O fluxo pode ser dividido em 5 etapas principais:
 
 1. **Interação com o usuário (Alexa)**  
@@ -85,5 +83,3 @@ O fluxo pode ser dividido em 5 etapas principais:
    - O sistema retorna um JSON de resposta à Alexa.  
    - O usuário recebe feedback por voz.  
    - Se necessário, comandos são enviados para os dispositivos GoodWe.  
-
-Esse fluxo garante que o EnergyTime combine **dados climáticos**, **IA** e **automação residencial** para auxiliar no uso eficiente de energia.
