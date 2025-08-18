@@ -1,12 +1,40 @@
-# EnergyTime | Challenge 1° Semestre
+# EnergyTime | Challenge
 
-## 🎯 1. Objetivo Geral
+# 📌 EnergyTime
 
-Desenvolver uma solução automatizada que permita ao usuário configurar e monitorar o carregamento de veículos elétricos via comandos na Alexa, com base em:
+## 🚀 Sobre o Projeto
 
-- Dados preditivos como clima e possíveis quedas de energia.
-- Preferências personalizadas salvas em banco de dados.
-- **Leitura e análise em tempo real dos dados do inversor solar**, permitindo estimar a melhor janela de carregamento com base na eficiência da geração solar e nos dados de consumo.
+O **EnergyTime** é um projeto acadêmico desenvolvido como desafio da **GoodWe** em parceria com a **FIAP**.  
+O objetivo é criar uma aplicação que integre os equipamentos da GoodWe — como inversores, carregadores elétricos e baterias — com um assistente virtual, oferecendo controle inteligente e previsões baseadas em dados.  
+
+O projeto **está em desenvolvimento**, e o planejamento é implementar as seguintes funcionalidades na aplicação:
+
+1. **Integração com dispositivos GoodWe**  
+   O usuário poderá se comunicar com os equipamentos da GoodWe por comandos de voz via **Alexa**. Entre as ações previstas estão:  
+   - Consultar informações do inversor.  
+   - Ligar ou desligar dispositivos.  
+   - Executar outras funcionalidades do sistema integrado.  
+
+2. **Informações sobre horários de maior incidência solar**  
+   Com base na **localização geográfica** e no **ângulo das placas solares**, o sistema determinará os horários de maior incidência solar e, portanto, maior geração de energia. A Alexa poderá:  
+   - Informar esses horários ao usuário.  
+   - Direcionar a energia gerada para equipamentos específicos durante o pico de produção.  
+
+3. **Previsão de quedas de energia via Inteligência Artificial**  
+   O projeto inclui um modelo de IA capaz de prever possíveis quedas de energia com base em dados meteorológicos, como:  
+   - Data  
+   - Umidade relativa do ar  
+   - Volume de chuva (mm)  
+   - Velocidade do vento  
+   - Temperatura  
+
+   Com base em padrões históricos, o sistema alertará o usuário para se preparar — seja armazenando energia ou carregando equipamentos com antecedência.  
+
+### 🌱 Benefícios do EnergyTime
+- **Redução da emissão de CO₂**: incentivo ao uso de tecnologias que facilitam o aproveitamento da energia solar.  
+- **Eficiência energética**: permite direcionar a energia para onde ela é mais necessária, seja armazenada ou consumida.  
+- **Automação residencial**: integração com assistentes virtuais e controle inteligente de dispositivos.  
+
 
 ## 2. Organização Github
 
@@ -27,45 +55,3 @@ projeto-alexa-carregador/
 - esp32/ ← (Opcional: código embarcado para ESP32)
   - main.ino ← Código do ESP32 com controle via MQTT
 
-## 🔋 3. Aplicações de Energia Renovável e Tecnologias Inteligentes
-
-### Sustentabilidade Ambiental
-
-- Redução direta de emissões de CO₂ com uso de energia solar
-- Adoção de práticas mais conscientes com uso automatizado
-
-### Independência Energética
-
-- Geração própria reduz dependência da rede
-- Energia armazenada pode ser usada em situações emergenciais
-
-### Eficiência Energética
-
-- Com a leitura do inversor, é possível:
-    - Otimizar horários de carregamento com base na geração solar
-    - Evitar sobrecargas e desperdícios
-    - Detectar falhas no sistema de geração
-- Decisões inteligentes com IA permitem reduzir perdas
-
-### Automação Residencial/Industrial
-
-- Controle por comandos de voz com Alexa
-- Monitoramento contínuo do desempenho dos equipamentos
-
----
-
-## ⚠️ 4. Possíveis Desafios
-
-- Limitações no acesso à API oficial da GoodWe (conta corporativa exigida)
-- Restrições de segurança da Alexa em comandos automatizados
-- Precisão das previsões climáticas
-- Segurança e criptografia dos dados sensíveis
-- Treinamento eficaz da IA com bases realistas
-
----
-
-## ✅ 5. Conclusão
-
-A integração entre os equipamentos da GoodWe, a assistente Alexa e sistemas inteligentes abre novas possibilidades para automação sustentável e consciente. Utilizar dados climáticos, informações do inversor e IA para otimizar o carregamento veicular pode tornar o consumo energético mais eficiente, econômico e ecológico.
-
-Com uma equipe organizada, acesso à documentação técnica e boas práticas de programação, este projeto tem potencial real de aplicação em residências inteligentes e, futuramente, até em ambientes corporativos ou industriais, contribuindo para a transição energética global.
