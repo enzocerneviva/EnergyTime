@@ -82,4 +82,36 @@ O fluxo pode ser dividido em 5 etapas principais:
 5. **Resposta ao usuário e execução de ações**  
    - O sistema retorna um JSON de resposta à Alexa.  
    - O usuário recebe feedback por voz.  
-   - Se necessário, comandos são enviados para os dispositivos GoodWe.  
+   - Se necessário, comandos são enviados para os dispositivos GoodWe.
+  
+## 4. Tecnologias Utilizadas
+
+O **EnergyTime** foi desenvolvido utilizando um conjunto de linguagens, frameworks e serviços para integração entre IA, APIs externas e assistente virtual.
+
+### 🔹 Linguagem de Programação
+- **Python**: base principal da aplicação.
+
+### 🔹 Frameworks e Bibliotecas
+- **Flask / FastAPI**: criação de servidor e APIs para comunicação com a Alexa.
+- **scikit-learn**: implementação do modelo de Machine Learning (Random Forest).
+- **Requests**: consumo de APIs externas (clima e dispositivos).
+
+### 🔹 Inteligência Artificial
+- **Random Forest Classifier**: modelo de classificação binária para prever quedas de energia.
+- **Pandas**: manipulação e análise de dados.
+
+### 🔹 APIs Externas
+- **OpenWeather**: dados climáticos em tempo real para alimentar a IA.
+
+### 🔹 Integração
+- **Alexa Skills Kit**: criação de intents e respostas para interação por voz.
+- **Render**: hospedagem da aplicação em nuvem com acesso via HTTPS.
+
+---
+
+## 👥 Equipe
+- Enzo Cerneviva
+- Gustavo Braga
+- Murilo Arcanjo
+- Rafael Costa
+
