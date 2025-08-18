@@ -34,9 +34,10 @@ O projeto **está em desenvolvimento**, e o planejamento é implementar as segui
 - **Automação residencial**: integração com assistentes virtuais e controle inteligente de dispositivos.  
 
 
-## 2. Organização Github
+## 2. Organização da Aplicação
 
-projeto-alexa-carregador/
+```bash
+EnergyTime/
 - README.md
 - .env.example
 - .gitignore
@@ -52,4 +53,4 @@ projeto-alexa-carregador/
     - api_adapter.py ← Comunicação via API ou simulação local
 - esp32/ ← (Opcional: código embarcado para ESP32)
   - main.ino ← Código do ESP32 com controle via MQTT
-
+```
