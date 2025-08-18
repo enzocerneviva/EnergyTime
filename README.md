@@ -1,6 +1,6 @@
 # EnergyTime | Challenge
 
-## 🚀 Sobre o Projeto
+## Sobre o Projeto
 
 O **EnergyTime** é um projeto acadêmico desenvolvido como desafio da **GoodWe** em parceria com a **FIAP**.  
 O objetivo é criar uma aplicação que integre os equipamentos da GoodWe — como inversores, carregadores elétricos e baterias — com um assistente virtual, oferecendo controle inteligente e previsões baseadas em dados.  
@@ -28,7 +28,7 @@ O projeto **está em desenvolvimento**, e o planejamento é implementar as segui
 
    Com base em padrões históricos, o sistema alertará o usuário para se preparar — seja armazenando energia ou carregando equipamentos com antecedência.  
 
-### 🌱 Benefícios do EnergyTime
+### Benefícios do EnergyTime
 - **Redução da emissão de CO₂**: incentivo ao uso de tecnologias que facilitam o aproveitamento da energia solar.  
 - **Eficiência energética**: permite direcionar a energia para onde ela é mais necessária, seja armazenada ou consumida.  
 - **Automação residencial**: integração com assistentes virtuais e controle inteligente de dispositivos.  
