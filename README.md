@@ -33,9 +33,6 @@ O projeto **está em desenvolvimento**, e o planejamento é implementar as segui
 - **Eficiência energética**: permite direcionar a energia para onde ela é mais necessária, seja armazenada ou consumida.  
 - **Automação residencial**: integração com assistentes virtuais e controle inteligente de dispositivos.  
 
-
-## 2. Organização da Aplicação
-
 ## 2. Organização da Aplicação
 
 A estrutura do projeto **EnergyTime** é a seguinte:
