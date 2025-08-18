@@ -1,7 +1,5 @@
 # EnergyTime | Challenge
 
-# 📌 EnergyTime
-
 ## 🚀 Sobre o Projeto
 
 O **EnergyTime** é um projeto acadêmico desenvolvido como desafio da **GoodWe** em parceria com a **FIAP**.  
