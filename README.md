@@ -57,3 +57,33 @@ EnergyTime/
     └── ia_engine.py    ← Motor de decisão com IA - treina modelo RandomForest para prever quedas de energia
                           com base em dados climáticos históricos 
 ```
+
+## 3. Funcionamento
+
+O **EnergyTime** funciona como um sistema integrado que conecta dispositivos GoodWe, dados climáticos e um modelo de inteligência artificial a um assistente virtual (Alexa).  
+
+O fluxo pode ser dividido em 5 etapas principais:
+
+1. **Interação com o usuário (Alexa)**  
+   - O usuário faz um pedido de informação ou comando por voz.  
+   - A Alexa envia essa requisição em formato **JSON** para a aplicação.  
+
+2. **Roteamento e processamento inicial (`main.py` + `alexa_skill.py`)**  
+   - O `main.py` recebe a requisição e direciona para o módulo responsável.  
+   - O `alexa_skill.py` interpreta a *intent* da Alexa e prepara a resposta adequada.  
+
+3. **Coleta de dados externos**  
+   - O módulo `weather.py` acessa a API do **OpenWeather** para obter dados climáticos atualizados.  
+   - O módulo `goodwe.py` simula a leitura e o controle de dispositivos GoodWe.  
+
+4. **Decisão com Inteligência Artificial (`ia_engine.py`)**  
+   - O motor de IA processa os dados climáticos.  
+   - O modelo de **Random Forest** classifica se existe risco de queda de energia (0 = sem risco / 1 = risco alto).  
+   - A decisão influencia como o carregamento será gerenciado (imediato, agendado ou interrompido).  
+
+5. **Resposta ao usuário e execução de ações**  
+   - O sistema retorna um JSON de resposta à Alexa.  
+   - O usuário recebe feedback por voz.  
+   - Se necessário, comandos são enviados para os dispositivos GoodWe.  
+
+Esse fluxo garante que o EnergyTime combine **dados climáticos**, **IA** e **automação residencial** para auxiliar no uso eficiente de energia.
