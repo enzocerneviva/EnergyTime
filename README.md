@@ -14,7 +14,7 @@ O projeto **está em desenvolvimento**, e o planejamento é implementar as segui
    - Executar outras funcionalidades do sistema integrado.  
 
 2. **Informações sobre horários de maior incidência solar** ***(Em desenvolvimento)***  
-   Com base na **localização geográfica** e no **ângulo das placas solares**, o sistema determinará os horários de maior incidência solar e, portanto, maior geração de energia. A Alexa poderá:  
+   Com base na **localização geográfica**, o sistema determinará os horários de maior incidência solar e, portanto, maior geração de energia. A Alexa poderá:  
    - Informar esses horários ao usuário.  
    - Direcionar a energia gerada para equipamentos específicos durante o pico de produção.  
 
