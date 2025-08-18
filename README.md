@@ -42,13 +42,20 @@ A estrutura do projeto **EnergyTime** é a seguinte:
 
 ```bash
 EnergyTime/
+|
 ├── README.md           ← Documento explicativo do projeto (você está lendo agora)
 ├── .env.example        ← Arquivo de exemplo com variáveis de ambiente, senhas e acessos
 ├── .gitignore          ← Arquivo para ignorar arquivos não versionados
+|
 └── backend/
     ├── main.py         ← Roteador principal - cria o servidor com rotas HTTPS para comunicação com a Alexa
+
     ├── alexa_skill.py  ← Integração com Alexa - processa requisições (Intents) em JSON e retorna respostas JSON
+
     ├── weather.py      ← Dados climáticos - importa e trata previsões do OpenWeather para uso na IA
+
     ├── goodwe.py       ← Simulação de leitura de dados e envio de comandos para equipamentos GoodWe
-    └── ia_engine.py    ← Motor de decisão com IA - treina modelo RandomForest para prever quedas de energia com base em dados climáticos históricos
+
+    └── ia_engine.py    ← Motor de decisão com IA - treina modelo RandomForest para prever quedas de energia
+                          com base em dados climáticos históricos 
 ```
