@@ -1,0 +1,2 @@
+energia_recebida;energia_convertida;potencia_atual;capacidade_maxima;rendimento_percentual;energia_hoje;energia_mes;energia_total;status_operacional;temperatura_inversor;tensao_dc;corrente_dc;tensao_ac;corrente_ac;tempo_atividade_total
+8.7;8.2;3500;5000;94.25;8.2;110.3;1850.7;Operando;41.3;480.5;7.3;230.1;15.2;2150
