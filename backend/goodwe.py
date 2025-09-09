@@ -3,7 +3,7 @@ import pandas as pd
 import os
 
 # Caminho para o arquivo JSON com dados do inversor, relativo ao arquivo atual
-caminho_inversor = os.path.join(os.path.dirname(__file__), 'base_de_dados', 'solar_inverter_data.json')
+caminho_inversor = os.path.join(os.path.dirname(__file__), 'basesDeDados', 'solar_inverter_data.json')
 dados_inversor = pd.read_json(caminho_inversor)  # Lê os dados do inversor em um DataFrame
 
 # Função simulada para carregar o carro (placeholder)
