@@ -7,7 +7,7 @@ from geocoding import geocoding
 import json
 
 # caminho do arquivo JSON com user_id -> estado
-caminho_base_de_dados = os.path.join(os.path.dirname(__file__), 'baseDeDados', 'id_location.json')
+caminho_base_de_dados = os.path.join(os.path.dirname(__file__), 'basesDeDados', 'id_location.json')
 
 
 def carregar_dados():
