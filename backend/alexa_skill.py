@@ -1,118 +1,81 @@
-from goodwe import ligarCarregador, desligarCarregador, analiseInversor  # Funções que retornam textos para alexa da atividade
-from ia_engine import previsaoQuedaDeEnergiaAlexa  # Função que retorna o texto sobre previsão do tempo para Alexa
+# ========================
+# Importações
+# ========================
+from goodwe import carregar_carro  # Inicia o carregamento do carro
+from goodwe import analise_inversor  # Analisa dados do inversor
+from weather import get_coordinates, get_weather  # Funções do weather.py
+# ia_engine.texto_alexa não será usado, porque vamos gerar o texto direto com get_weather
 
-import os
-import pandas as pd
-from geocoding import geocoding
-import json
-
-# caminho do arquivo JSON com user_id -> estado
-caminho_base_de_dados = os.path.join(os.path.dirname(__file__), 'basesDeDados', 'id_location.json')
-
-
-def carregar_dados():
-    """Carrega o JSON com user_id -> estado. Se não existir, cria vazio."""
-    if not os.path.exists(caminho_base_de_dados):
-        return {}
-    with open(caminho_base_de_dados, "r", encoding="utf-8") as f:
-        return json.load(f)
-
-
-def salvar_dados(dados):
-    """Salva o dicionário atualizado no JSON."""
-    with open(caminho_base_de_dados, "w", encoding="utf-8") as f:
-        json.dump(dados, f, ensure_ascii=False, indent=2)
-
-
-# ---------------------- INTENTS ----------------------
-
-def handle_check_weather(dados):
-    user_id = dados["session"]["user"]["userId"]
-    dadosIdLocation = carregar_dados()
-
-    if user_id in dadosIdLocation:  # já temos estado salvo
-        estado = dadosIdLocation[user_id]
-        lat, lon = geocoding(estado)
-        resposta_texto = previsaoQuedaDeEnergiaAlexa(lat, lon, estado)
-        return {
-            "version": "1.0",
-            "response": {
-                "outputSpeech": {"type": "PlainText", "text": resposta_texto},
-                "shouldEndSession": True
-            }
-        }
-    else:  # ainda não temos estado salvo
-        resposta_texto = (
-            "Qual é o estado em que você está localizado? "
-            "Você pode responder como: 'Eu estou em São Paulo'."
-        )
-        return {
-            "version": "1.0",
-            "response": {
-                "outputSpeech": {"type": "PlainText", "text": resposta_texto},
-                "shouldEndSession": False
-            }
-        }
-
-
-def handle_get_state(dados):
-    user_id = dados["session"]["user"]["userId"]
-    estado = dados["request"]["intent"]["slots"]["estado"]["value"]
-
-    # salvar no JSON
-    dadosIdLocation = carregar_dados()
-    dadosIdLocation[user_id] = estado
-    salvar_dados(dadosIdLocation)
-
-    # já responde com previsão
-    lat, lon = geocoding(estado)
-    resposta_texto = previsaoQuedaDeEnergiaAlexa(lat, lon, estado)
-
-    return {
-        "version": "1.0",
-        "response": {
-            "outputSpeech": {"type": "PlainText", "text": resposta_texto},
-            "shouldEndSession": True
-        }
-    }
-
-
-# Função principal para tratar as requisições da Alexa
-def requisicao_alexa(dados):
+# ========================
+# Função principal da skill Alexa
+# ========================
+def tratar_requisicao_alexa(dados):
     try:
-        tipo_requisicao = dados["request"]["type"]  # Obtém o tipo da requisição (LaunchRequest, IntentRequest, etc.)
+        tipo_requisicao = dados["request"]["type"]  # Tipo de requisição (LaunchRequest, IntentRequest, etc.)
 
-        # Caso o usuário apenas abra a skill
+        # 1️⃣ Caso o usuário apenas abra a skill
         if tipo_requisicao == "LaunchRequest":
             resposta_texto = (
-                "Bem-vindo! Você pode me pedir as seguintes funcionalidades: "
-                "Ligar o carregador, Desligar o carregador, Previsão de queda de energia, "
-                "Informação de índice solar, Status da planta ou Dados do inversor"
+                "Bem-vindo! Você pode me pedir: "
+                "Ligar o carregador do carro, desligar o carregador, "
+                "análise do inversor ou previsão do tempo."
             )
 
-        # Caso o usuário tenha emitido um comando específico (intent)
+        # 2️⃣ Caso o usuário emita um comando específico
         elif tipo_requisicao == "IntentRequest":
-            intent_name = dados["request"]["intent"]["name"]  # Nome da intent solicitada
+            intent_name = dados["request"]["intent"]["name"]
 
-            # Verifica qual intent foi solicitada e age de acordo
+            # 🚗 Iniciar carregamento do carro
             if intent_name == "StartChargingIntent":
-                resposta_texto = ligarCarregador()
+                carregar_carro()
+                resposta_texto = "Carregamento iniciado com sucesso."
 
+            # 🚗 Parar carregamento do carro
             elif intent_name == "StopChargingIntent":
-                resposta_texto = desligarCarregador()
+                resposta_texto = "Carregamento parado com segurança."
 
+            # ☀️ Previsão do tempo
             elif intent_name == "CheckWeatherIntent":
-                return handle_check_weather(dados)
+                # 2.1 Captura o estado informado no slot da Alexa
+                slots = dados["request"]["intent"].get("slots", {})
+                state = slots.get("state", {}).get("value") if "state" in slots else None
 
-            elif intent_name == "GetStateIntent":
-                return handle_get_state(dados)
+                # 2.2 Se o usuário ainda não informou o estado, Alexa pergunta
+                if not state:
+                    resposta_texto = "Qual estado você está?"
+                
+                # 2.3 Se o estado foi informado, busca coordenadas e previsão
+                else:
+                    lat, lon = get_coordinates(state)  # Pega lat/lon pelo estado
+                    if lat is None or lon is None:
+                        resposta_texto = f"Não consegui encontrar localização para {state}. Pode repetir?"
+                    else:
+                        previsao = get_weather(lat, lon)  # Busca previsão
+                        # Formata a resposta em texto amigável
+                        hoje = previsao[0]["hoje"]
+                        amanha = previsao[1]["amanhã"]
+                        resposta_texto = (
+                            f"A previsão para {state}:\n"
+                            f"Hoje → Temp: {hoje['temperatura']:.1f}°C, "
+                            f"Umidade: {hoje['umidade']}%, "
+                            f"Vento: {hoje['vento']:.1f} m/s, "
+                            f"Chuva: {hoje['precipitacao']} mm.\n"
+                            f"Amanhã → Temp: {amanha['temperatura']:.1f}°C, "
+                            f"Umidade: {amanha['umidade']}%, "
+                            f"Vento: {amanha['vento']:.1f} m/s, "
+                            f"Chuva: {amanha['precipitacao']} mm."
+                        )
 
+            # ⚡ Análise do inversor
             elif intent_name == "CheckInversorIntent":
-                resposta_texto = f"Esses são os dados obtidos da análise do inversor: {analiseInversor()}"
+                resposta_texto = f"Esses são os dados do inversor: {analise_inversor()}"
+                print(analise_inversor())  # Para debug no console
 
+            # ❌ Comando não reconhecido
             else:
                 resposta_texto = "Desculpe, não entendi seu comando."
 
+        # Tipo de requisição desconhecido
         else:
             resposta_texto = "Tipo de requisição desconhecido."
 
@@ -123,7 +86,7 @@ def requisicao_alexa(dados):
         print("DADOS RECEBIDOS:", dados)
         resposta_texto = "Houve um erro ao processar sua solicitação."
 
-    # Retorna o formato esperado pela Alexa para resposta
+    # Retorna a resposta no formato esperado pela Alexa
     return {
         "version": "1.0",
         "response": {
