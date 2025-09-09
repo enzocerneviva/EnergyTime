@@ -3,15 +3,20 @@ import pandas as pd
 import os
 
 # Caminho para o arquivo JSON com dados do inversor, relativo ao arquivo atual
-caminho_inversor = os.path.join(os.path.dirname(__file__), 'base_de_dados', 'dados_inversor.json')
+caminho_inversor = os.path.join(os.path.dirname(__file__), 'base_de_dados', 'solat_inverter_data.json')
 dados_inversor = pd.read_json(caminho_inversor)  # Lê os dados do inversor em um DataFrame
 
 # Função simulada para carregar o carro (placeholder)
-def carregar_carro():
-    print("Carregando Carro")
+def ligarCarregador():
+    text = "Carregamento do carro iniciado com sucesso!"
+    return text
+
+def desligarCarregador():
+    text = "Carregamento parado com segurança."
+    return text
 
 # Função para analisar e formatar os dados do inversor
-def analise_inversor():
+def analiseInversor():
     print("\nAnalisando dados do inversor...\n")
     result = "Dados obtidos: "
 

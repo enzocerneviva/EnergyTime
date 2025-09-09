@@ -3,23 +3,21 @@ from dotenv import load_dotenv # Função da biblioteca python-dotenv que carreg
 import os # Biblioteca nativa do python para trabalhar com arquivos, caminhos e variáveis de ambiente.
 from datetime import datetime, timedelta # Importa classes para manipulação de datas e horas.
 
-# Caminho para localizar o arquivo .env a partir da localização deste código.
-dotenv_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env') 
-# Carrega as variáveis de ambiente do .env.
-load_dotenv(dotenv_path) 
+# Localizando o arquivo .env com as variáveis ambientes
+dotenv_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env')
+load_dotenv(dotenv_path) # Carregando variáveis ambientes
 
 # Latitude e longitude de São Paulo, SP.
-lat = -23.5489
-lon = -46.6388
+latitude = -23.5489
+longitude = -46.6388
 
-# Obtém a chave da API OpenWeather das variáveis de ambiente.
 API_KEY = os.getenv("OPENWEATHER_API_KEY")
 
-# Monta a URL base para requisição da previsão do tempo (5 dias a cada 3h), já com as coordenadas e chave da API.
-BASE_URL = f"https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API_KEY}&units=metric"
-
 # Função que faz a requisição e o processamento dos dados climáticos.
-def get_weather():
+def get_weather(lat, lon):
+
+    # Monta a URL base para requisição da previsão do tempo (5 dias a cada 3h), já com as coordenadas e chave da API.
+    BASE_URL = f"https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API_KEY}&units=metric"
 
     # Faz uma requisição GET para a API do OpenWeather.
     response = requests.get(BASE_URL)

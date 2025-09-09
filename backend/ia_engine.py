@@ -1,23 +1,16 @@
-# scikit-learn
-# ia_engine.py — Módulo de IA para previsão de queda de energia
-
-import pandas as pd # Biblioteca para manipulação e análise de dados.
-from sklearn.ensemble import RandomForestClassifier # Importa o classificador Random Forest do scikit-learn.
-from sklearn.model_selection import train_test_split # Função para dividir a base de dados em treino e teste.
-from sklearn.metrics import classification_report # Gera relatório com métricas de classificação.
-import os # Biblioteca para manipulação de caminhos de arquivos e diretórios.
+import pandas as pd # Manipulação e Análise de Dados
+from sklearn.ensemble import RandomForestClassifier # Modelo de Classificação
+from sklearn.model_selection import train_test_split # Função de separação de dados para treinamento do modelo
+from sklearn.metrics import classification_report # Gera o resultado/acurácia do modelo
 from weather import get_weather  # Importa todas as funções do módulo weather.py (incluindo get_weather).
-
+import os
 
 # 1. Carrega base de dados
-
-caminho_base = os.path.join(os.path.dirname(__file__), 'base_de_dados', 'ocorrencias_queda_de_energia.csv')
-df = pd.read_csv(caminho_base)  # Lê o arquivo CSV com os dados históricos de quedas de energia.
-
+caminho_arquivo = os.path.join(os.path.dirname(__file__), 'basesDeDados', 'power_outages.csv')
+df = pd.read_csv(caminho_arquivo, sep=",") 
 
 # 2. Pré-processamento
-
-df['data'] = pd.to_datetime(df['data'], dayfirst=True)  # Converte a coluna "data" para o formato datetime.
+df['data'] = pd.to_datetime(df['data'], dayfirst=True)
 
 # Define as variáveis de entrada (features) e saída (target).
 X = df[['precipitacao_total_mm', 'temperatura_media_c', 'umidade_relativa_%', 'vento_m_s']] # Variáveis independentes.
@@ -29,7 +22,6 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 # Cria e treina o modelo de Random Forest.
 modelo = RandomForestClassifier(random_state=42)
 modelo.fit(X_train, y_train)
-
 
 # 3. Função de previsão de risco de queda de energia
 
@@ -46,8 +38,8 @@ def prever_risco(precipitacao, temperatura, umidade, vento):
 
 # 4. Previsão com base nos dados climáticos de hoje e amanhã
 
-def prever_risco_com_previsao():
-    previsao = get_weather() # Obtém a previsão do tempo usando a função importada do módulo weather.
+def prever_risco_com_previsao(lat, lon):
+    previsao = get_weather(lat, lon) # Obtém a previsão do tempo usando a função importada do módulo weather.
     resultados = {}
 
     # Itera sobre os dias da previsão (hoje e amanhã).
@@ -70,9 +62,9 @@ def prever_risco_com_previsao():
     return resultados
 
 # Função para gerar texto de resposta para a Alexa.
-def texto_alexa():
+def previsaoQuedaDeEnergiaAlexa(lat, lon, estado):
 
-    resultados = prever_risco_com_previsao() # Chama a função que faz a previsão baseada no clima.
+    resultados = prever_risco_com_previsao(lat, lon) # Chama a função que faz a previsão baseada no clima.
 
     resultado_hoje = resultados["hoje"]["queda_de_energia"]
     resultado_amanha = resultados["amanhã"]["queda_de_energia"]

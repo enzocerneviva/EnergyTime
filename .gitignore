@@ -9,3 +9,5 @@ __pycache__/
 # Configurações de IDEs
 .vscode/
 .idea/
+
+backend/basesDeDados/id_location
