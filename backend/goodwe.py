@@ -17,7 +17,6 @@ def desligarCarregador():
 
 # Função para analisar e formatar os dados do inversor
 def analiseInversor():
-    print("\nAnalisando dados do inversor...\n")
     result = "Dados obtidos: "
 
     # Itera pelas colunas do DataFrame

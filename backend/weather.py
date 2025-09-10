@@ -7,10 +7,6 @@ from datetime import datetime, timedelta # Importa classes para manipulação de
 dotenv_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env')
 load_dotenv(dotenv_path) # Carregando variáveis ambientes
 
-# Latitude e longitude de São Paulo, SP.
-latitude = -23.5489
-longitude = -46.6388
-
 API_KEY = os.getenv("OPENWEATHER_API_KEY")
 
 # Função que faz a requisição e o processamento dos dados climáticos.

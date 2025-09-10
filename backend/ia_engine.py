@@ -86,9 +86,9 @@ def previsaoQuedaDeEnergiaAlexa(lat, lon, estado):
 
 # 5. Execução direta para teste
 
-print("---------- Dados Treinamento de Modelo de Previsão ----------")
+# print("---------- Dados Treinamento de Modelo de Previsão ----------")
 
-# Faz a previsão no conjunto de teste e imprime um relatório de desempenho do modelo.
-y_pred = modelo.predict(X_test)
-print("Relatório de Classificação:\n")
-print(classification_report(y_test, y_pred))
+# # Faz a previsão no conjunto de teste e imprime um relatório de desempenho do modelo.
+# y_pred = modelo.predict(X_test)
+# print("Relatório de Classificação:\n")
+# print(classification_report(y_test, y_pred))

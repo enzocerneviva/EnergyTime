@@ -1,9 +1,8 @@
 from goodwe import ligarCarregador, desligarCarregador, analiseInversor  # Funções que retornam textos para alexa da atividade
 from ia_engine import previsaoQuedaDeEnergiaAlexa  # Função que retorna o texto sobre previsão do tempo para Alexa
+from geocoding import get_coordinates # Função de conversão de estado para coordenadas
 
 import os
-import pandas as pd
-from geocoding import geocoding
 import json
 
 # caminho do arquivo JSON com user_id -> estado
@@ -32,7 +31,7 @@ def handle_check_weather(dados):
 
     if user_id in dadosIdLocation:  # já temos estado salvo
         estado = dadosIdLocation[user_id]
-        lat, lon = geocoding(estado)
+        lat, lon = get_coordinates(estado)
         resposta_texto = previsaoQuedaDeEnergiaAlexa(lat, lon, estado)
         return {
             "version": "1.0",
@@ -65,7 +64,7 @@ def handle_get_state(dados):
     salvar_dados(dadosIdLocation)
 
     # já responde com previsão
-    lat, lon = geocoding(estado)
+    lat, lon = get_coordinates(estado)
     resposta_texto = previsaoQuedaDeEnergiaAlexa(lat, lon, estado)
 
     return {
