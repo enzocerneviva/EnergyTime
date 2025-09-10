@@ -10,4 +10,4 @@ __pycache__/
 .vscode/
 .idea/
 
-backend/basesDeDados/id_location
+backend/basesDeDados/id_location.json
