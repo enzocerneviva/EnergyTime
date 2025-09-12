@@ -1,4 +1,4 @@
-Time,Plant,PV(W)
+Time (5 min),Plant,PV(W)
 11.09.2025 00:00:00,Grid-Tied PV Inverter,0
 11.09.2025 00:05:00,Grid-Tied PV Inverter,0
 11.09.2025 00:10:00,Grid-Tied PV Inverter,0
