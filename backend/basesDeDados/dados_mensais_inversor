@@ -1,4 +1,4 @@
-Data,Planta,Classificação,Capacidade(kW),Geração(kWh),Renda(EUR)
+Data(Dias),Planta,Classificação,Capacidade(kW),Geração(kWh),Renda(EUR)
 01.08.2025,Grid-Tied PV Inverter,Residential,3,10.4,32760
 02.08.2025,Grid-Tied PV Inverter,Residential,3,9.4,29610
 03.08.2025,Grid-Tied PV Inverter,Residential,3,11.3,35595
