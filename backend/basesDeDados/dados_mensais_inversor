@@ -1,4 +1,4 @@
-Date	Plant	Classification	Capacity(kW)	Generation(kWh)	Income(EUR)
+Date,Plant,Classification,Capacity(kW),Generation(kWh),Income(EUR)
 01.08.2025	Grid-Tied PV Inverter	Residential	3	10.4	32760
 02.08.2025	Grid-Tied PV Inverter	Residential	3	9.4	29610
 03.08.2025	Grid-Tied PV Inverter	Residential	3	11.3	35595
