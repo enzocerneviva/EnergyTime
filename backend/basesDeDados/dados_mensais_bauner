@@ -1,4 +1,4 @@
-Data,Planta,Classificação,Capacidade(kW),PV(kWh),Venda(kWh),Compra(kWh),Consumo(kWh),In-house(kWh),Self-Cons. Ratio(%),Contribuição Ratio(%),Renda(EUR)
+Data(Dias),Planta,Classificação,Capacidade(kW),PV(kWh),Venda(kWh),Compra(kWh),Consumo(kWh),In-house(kWh),Self-Cons. Ratio(%),Contribuição Ratio(%),Renda(EUR)
 01.08.2025,Bauer,Battery Storage,7.56,37.8,47.35,0.04,0.04,0,0,0,8.32
 02.08.2025,Bauer,Battery Storage,7.56,34.3,38.36,0.06,0.06,0,0,0,7.55
 03.08.2025,Bauer,Battery Storage,7.56,23.6,18.57,0.09,2.42,2.33,11.15,96.28,5.19
