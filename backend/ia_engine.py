@@ -6,7 +6,7 @@ from weather import get_weather  # Importa todas as funções do módulo weather
 import os
 
 # 1. Carrega base de dados
-caminho_arquivo = os.path.join(os.path.dirname(__file__), 'basesDeDados', 'power_outages.csv')
+caminho_arquivo = os.path.join(os.path.dirname(__file__), 'bases_de_dados', 'modelo_queda_de_energia', 'power_outages.csv')
 df = pd.read_csv(caminho_arquivo, sep=",") 
 
 # 2. Pré-processamento

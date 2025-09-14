@@ -1,4 +1,15 @@
 import streamlit as st
+import requests
+
+URL_BACKEND = "http://localhost:10000/historico"  # ajustar no deploy
+
+st.title("💡 Histórico de Interações com a Alexa")
+st.markdown("---")
+
+try:
+    historico = requests.get(URL_BACKEND).json()
+except Exception:
+    historico = []
 
 st.set_page_config(page_title="EnergyTime", page_icon="logo_energytime.png", layout="wide")
 
