@@ -1,5 +1,6 @@
 import streamlit as st
 import requests
+import pandas as pd
 
 st.set_page_config(page_title="EnergyTime", page_icon="logo_energytime.png", layout="wide")
 
@@ -76,8 +77,90 @@ if paginas == "☰ Sobre":
 elif paginas == "📊 Análises":
 
     st.title("📊 Visualização dos Dados")
-    st.header("Análise de dados de energia da casa no último mês")
-    st.header("Análise de dados de energia da casa no último dia")
+    st.markdown("---")
+    
+    st.markdown("## Análise Mensal de Consumo e Geração Solar")
+ 
+    # --- Carregar a planilha mensal ---
+    try:
+        df = pd.read_excel("content/BaseDeDados_BATERIA_MENSAL.xls", header=None)
+    
+        # Assuming the header is in the 21st row (index 20) based on previous cells
+        df.columns = ["Monthly Report", "Plant", "Classification", "Capacity(kW)", "PV(kWh)", "Sell(kWh)", "Buy(kWh)", "Consumption(kWh)", "In-House(kWh)", "Self-Cons. Ratio(%)", "Contribution Ratio(%)", "Income(EUR)"]
+    
+        # Remove unnecessary rows (up to row 20 and the last row) and the row with 'Date'
+        df = df.iloc[21:-1].copy()
+    
+        # Convert 'Monthly Report' to datetime
+        df["Monthly Report"] = pd.to_datetime(df["Monthly Report"], format="%d.%m.%Y")
+    
+        # Garantindo que as colunas numéricas sejam float (substitui vírgula por ponto se necessário)
+        df["PV(kWh)"] = df["PV(kWh)"].astype(str).str.replace(",", ".").astype(float)
+        df["Consumption(kWh)"] = df["Consumption(kWh)"].astype(str).str.replace(",", ".").astype(float)
+    
+        # --- Gráfico comparando PV e Consumo com Streamlit ---
+        st.subheader("Geração Solar x Consumo de Energia Mensal")
+    
+        # Para usar st.line_chart, o eixo x deve ser o índice ou uma coluna numérica/datetime
+        df_indexed = df.set_index("Monthly Report")
+    
+        st.line_chart(df_indexed[["PV(kWh)", "Consumption(kWh)"]])
+    
+    
+        # --- Exibindo Totais com Streamlit ---
+        total_consumption = df['Consumption(kWh)'].sum()
+        total_solar_production = df['PV(kWh)'].sum()
+    
+        st.subheader("Totais Mensais")
+        st.write(f"Consumo Total do Local (Mensal): {total_consumption:.2f} kWh")
+        st.write(f"Produção Solar Total (PV) (Mensal): {total_solar_production:.2f} kWh")
+    
+    except FileNotFoundError:
+        st.error("Erro: O arquivo 'BaseDeDados_BATERIA_MENSAL.xls' não foi encontrado. Por favor, carregue o arquivo no ambiente do Colab.")
+    except Exception as e:
+        st.error(f"Ocorreu um erro: {e}")
+
+    st.markdown("## Análise de Consumo e Geração Solar Diária")
+ 
+    # --- Carregando dados do arquivo Excel ---
+    try:
+        df = pd.read_excel("content/BaseDeDados_BATERIA_DIARIA.xls", header=1) # Assuming the header is in the second row
+    
+        # Renomeando as colunas para facilitar o acesso (ajuste conforme o nome exato no seu arquivo)
+        df.columns = ["Time", "PV(W)", "SOC(%)", "Battery(W)", "Grid (W)", "Load(W)"]
+    
+        # Remover a primeira linha que contém os nomes das colunas originais
+        df = df.iloc[1:].copy()
+    
+    
+        # Convertendo a coluna Time para datetime
+        df["Time"] = pd.to_datetime(df["Time"], format="%d.%m.%Y %H:%M:%S")
+    
+        # Garantindo que os números sejam float (substitui vírgula por ponto se necessário)
+        df["PV(W)"] = df["PV(W)"].astype(str).str.replace(",", ".").astype(float)
+        df["Load(W)"] = df["Load(W)"].astype(str).str.replace(",", ".").astype(float)
+
+        # --- Plotando com Streamlit ---
+        st.subheader("Consumo vs Geração Solar ao longo do dia")
+    
+        # Para usar st.line_chart, o eixo x deve ser o índice ou uma coluna numérica/datetime
+        # Vamos definir 'Time' como índice para o gráfico
+        df_indexed = df.set_index("Time")
+    
+        st.line_chart(df_indexed[["PV(W)", "Load(W)"]])
+    
+        # --- Exibindo Totais ---
+        total_daily_consumption = df['Load(W)'].sum()
+        total_daily_solar_production = df['PV(W)'].sum()
+    
+        st.subheader("Totais Diários")
+        st.write(f"Consumo Total Diário do Local: {total_daily_consumption:.2f} W")
+        st.write(f"Produção Solar Total Diária (PV): {total_daily_solar_production:.2f} W")
+    
+    except FileNotFoundError:
+        st.error("Erro: O arquivo 'BaseDeDados_BATERIA_DIARIA.xls' não foi encontrado. Por favor, carregue o arquivo no ambiente do Colab.")
+    except Exception as e:
+        st.error(f"Ocorreu um erro: {e}")
 
 elif paginas == "🔌 Equipamentos GoodWe":
     st.title("🔌 Informações sobre os Equipamentos")
@@ -125,72 +208,76 @@ elif paginas == "🔌 Equipamentos GoodWe":
 
 elif paginas == "💡 Assistente Alexa":
 
-    st.title("Histórico de Interações com a Alexa")
-    st.markdown("---")
-
     URL_BACKEND = "https://energytime-challenge-01.onrender.com/historico"  # ajustar no deploy
 
-    # Container principal com estilo (imitando border-radius e fundo claro)
-    st.markdown(
-        """
-        <style>
-        .chat-container {
-            border: 1px solid #ddd;
-            border-radius: 15px;
-            padding: 20px;
-            background-color: #f9f9f9;
-            max-height: 500px;
-            overflow-y: auto;
-        }
-        .mensagem {
-            margin: 10px 0;
-            padding: 10px 15px;
-            border-radius: 15px;
-            max-width: 70%;
-            word-wrap: break-word;
-        }
-        .entrada {
-            background-color: #DCF8C6;  /* verde claro estilo WhatsApp */
-            margin-left: auto;
-            text-align: right;
-        }
-        .resposta {
-            background-color: #ffffff;
-            border: 1px solid #ddd;
-            margin-right: auto;
-            text-align: left;
-        }
-        .timestamp {
-            font-size: 0.8em;
-            color: #888;
-            margin: 2px 5px;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
+    # Dicionário para traduzir intents em frases
+    INTENT_MAP = {
+        "LaunchRequest": "Abrir a skill da Alexa",
+        "CheckWeatherIntent": "Quero saber a previsão de queda de energia",
+        "GetStateIntent": "Estou em {estado}",
+        "CheckInversorIntent": "Quero saber os dados do inversor",
+        "StartChargingIntent": "Ligue o carregador",
+        "StopChargingIntent": "Desligue o carregador"
+    }
+
+    st.set_page_config(page_title="Histórico Alexa", layout="wide")
+
+    # Estilo das mensagens
+    user_bg = "background-color:#1e3a8a; color:white; padding:10px; border-radius:10px; margin:5px;"
+    alexa_bg = "background-color:#0f172a; color:white; padding:10px; border-radius:10px; margin:5px; font-style:italic; font-weight:400;"
+
+    st.title("💬 Histórico de Interações Alexa")
+    st.markdown("---")
+
+    # Função para traduzir intent para frase de usuário
+    def traduzir_entrada(entrada):
+        # Caso seja só string (ex: "CheckWeatherIntent")
+        if isinstance(entrada, str):
+            return INTENT_MAP.get(entrada, entrada)
+
+        # Caso seja dict (ex: {"GetStateIntent": {"estado": "são paulo"}})
+        elif isinstance(entrada, dict):
+            intent_name, slots = list(entrada.items())[0]
+            frase = INTENT_MAP.get(intent_name, intent_name)
+
+            # Substitui placeholders pelos valores dos slots
+            if isinstance(slots, dict):
+                for k, v in slots.items():
+                    frase = frase.replace(f"{{{k}}}", v)
+            return frase
+
+        # Fallback
+        return str(entrada)
 
     try:
-        historico = requests.get(URL_BACKEND).json()
-    except Exception:
+        response = requests.get(URL_BACKEND)
+        if response.status_code == 200:
+            historico = response.json()
+        else:
+            historico = []
+    except Exception as e:
+        st.error(f"Erro ao conectar com o backend: {e}")
         historico = []
 
-    if historico:
-        st.markdown('<div class="chat-container">', unsafe_allow_html=True)
-
-        for item in historico[::-1]:  # mais recentes primeiro
-            st.markdown(f'<div class="timestamp">{item["timestamp"]} | Intent: {item["intent"]}</div>', unsafe_allow_html=True)
-
-            # Entrada (usuário/Alexa) - lado direito
-            st.markdown(f'<div class="mensagem entrada">{item["entrada"]}</div>', unsafe_allow_html=True)
-
-            # Resposta (nosso sistema) - lado esquerdo
-            st.markdown(f'<div class="mensagem resposta">{item["resposta"]}</div>', unsafe_allow_html=True)
-
-        st.markdown('</div>', unsafe_allow_html=True)
+    if not historico:
+        st.info("Nenhuma interação registrada ainda.")
     else:
-        st.info("⚠️ Não há nenhum histórico de informações no momento.")
-        
+        for registro in historico:
+            col1, col2 = st.columns([1,1])
+
+            with col1:
+                frase_usuario = traduzir_entrada(registro["entrada"])
+                st.markdown(
+                    f"<div style='{user_bg}'>👤 <b>Usuário:</b> {frase_usuario}<br><small>{registro['timestamp']}</small></div>",
+                    unsafe_allow_html=True
+                )
+
+            with col2:
+                st.markdown(
+                    f"<div style='{alexa_bg}'>🤖 <b>Alexa:</b> {registro['resposta']}</div>",
+                    unsafe_allow_html=True
+                )
+
 elif paginas == "💬 IA Personalizada":
 
     st.title("Converse com a IA sobre qualquer dúvida sobre energia ou sobre os equipamentos")
