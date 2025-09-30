@@ -93,7 +93,7 @@ cd EnergyTime/backend
 pip install -r requirements.txt  
 
 ### 3. Configure variáveis de ambiente (.env)
-OPENWEATHER_KEY=suachave  
+OPENWEATHER_KEY = bd0575d8f212404126c33b80be9ea9d2  
 
 ### 4. Execute a aplicação
 python main.py  
