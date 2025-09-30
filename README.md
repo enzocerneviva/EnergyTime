@@ -7,7 +7,7 @@ O objetivo é criar uma aplicação que integre os equipamentos da GoodWe — co
 ---
 
 ## 2. Equipe Envolvida
-- Enzo Cardilli Cerneviva  
+- Enzo Cardilli Cerneviva - RM: 563480  
 - Gustavo Cordeiro Braga – RM: 562247  
 - Murilo Justino Arcanjo – RM: 565470  
 - Rafael Quattrer Dalla Costa – RM: 562052  
