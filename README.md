@@ -97,5 +97,3 @@ OPENWEATHER_KEY = bd0575d8f212404126c33b80be9ea9d2
 
 ### 4. Execute a aplicação
 python main.py  
-
----
