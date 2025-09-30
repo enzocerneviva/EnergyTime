@@ -6,7 +6,7 @@ st.set_page_config(page_title="EnergyTime", page_icon="logo_energytime.png", lay
 
 # Sidebar
 st.sidebar.image("logo_energytime.png", width=100)
-st.sidebar.title("EnergyTime")
+st.sidebar.title("EnergyTime")  
 
 paginas = st.sidebar.radio("", ["☰ Sobre", "📊 Análises", "🔌 Equipamentos GoodWe", "💡 Assistente Alexa","💬 IA Personalizada", "⚙️ Configurações"])
 
