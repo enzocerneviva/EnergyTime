@@ -1,4 +1,4 @@
-#EnergyTime | Challenge
+# EnergyTime | Challenge
 
 ## 1. Sobre o Projeto
 O EnergyTime é um projeto acadêmico desenvolvido como desafio da GoodWe em parceria com a FIAP.  
