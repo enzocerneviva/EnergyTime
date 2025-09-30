@@ -26,6 +26,7 @@ dados_mensais_inversor.dropna(subset=['Monthly Report', 'Geração(kWh)', 'Renda
 dados_mensais_bauner['Data(Dias)'] = pd.to_datetime(dados_mensais_bauner['Data(Dias)'], format='%d.%m.%Y', errors='coerce')
 dados_mensais_bauner.dropna(subset=['Data(Dias)'], inplace=True)
 
+<<<<<<< Updated upstream
 # Diários — removendo fuso horário
 dados_bateria_diario['Time (5 min)'] = pd.to_datetime(
     dados_bateria_diario['Time (5 min)'], format='%d.%m.%Y %H:%M:%S', errors='coerce'
@@ -159,3 +160,21 @@ if __name__ == "__main__":
     print("\n=== Análise Diária Detalhada ===")
     print(get_daily_inverter_generation())
     print(get_average_battery_level())
+=======
+# Função para analisar e formatar os dados do inversor
+def analiseInversor():
+    result = ""
+    return result
+
+def porcentagem_bateria_atual():
+    # base de dados puxa a porcetagem da bateria no momento de acordo com o horário atual
+    porcentagem = 23
+    text = ""
+    return "A porcentagem da bateria atual é: {porcentagem}"
+
+def analiseInversorDia ():
+    return "O inversor converteu 300w de energia nas ultimas 24h"
+
+# Executa a análise e imprime o resultado formatado
+print(analiseInversor())
+>>>>>>> Stashed changes
