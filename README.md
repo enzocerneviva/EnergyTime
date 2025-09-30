@@ -99,10 +99,3 @@ OPENWEATHER_KEY = bd0575d8f212404126c33b80be9ea9d2
 python main.py  
 
 ---
-
-## 9. Recursos Adicionais
-O repositório contém:  
-- Diagramas de blocos descritos em texto.  
-- Códigos-fonte organizados no diretório `/backend`.  
-- Scripts de IA e simulação de dispositivos.  
-- Instruções completas de execução.  
