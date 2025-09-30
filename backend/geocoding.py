@@ -1,12 +1,16 @@
 import requests
 import os
-from dotenv import load_dotenv
+from google.colab import userdata
 
-# Localizando o arquivo .env com as variáveis ambientes
-dotenv_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env')
-load_dotenv(dotenv_path) # Carregando variáveis ambientes
+API_KEY = userdata.get("OPENWEATHER_API_KEY")
 
-API_KEY = os.getenv("OPENWEATHER_API_KEY")
+# Verifica se a chave da API foi carregada
+# print(f"API Key loaded: {API_KEY is not None}")
+# if API_KEY:
+#     print(f"First few characters of API Key: {API_KEY[:5]}...")
+# else:
+#     print("API Key is not loaded. Please check your Colab Secrets and ensure the key is named 'OPENWEATHER_API_KEY'.")
+
 
 def get_coordinates(state, country="BR"):
     """
@@ -31,3 +35,7 @@ def get_coordinates(state, country="BR"):
     except Exception as e:
         print("Erro ao buscar coordenadas:", e)
         return None, None
+
+# Example usage and print the result
+lat, lon = get_coordinates("Rio de Janeiro")
+print(f"Latitude: {lat}, Longitude: {lon}")
