@@ -12,15 +12,8 @@ from openai import OpenAI
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 from google.colab import userdata # Import userdata to access Colab secrets
-# Removido import glob
 
 # ==============================
-# CONFIGURAÇÕES
-# ==============================
-# Coloque sua chave da OpenAI no Secrets Manager do Colab.
-# Clique no ícone de chave (🔑) no painel à esquerda,
-# adicione um novo segredo com o nome 'OPENAI_API_KEY' e cole sua chave lá.
-# A linha abaixo irá carregar a chave automaticamente.
 os.environ["OPENAI_API_KEY"] = userdata.get('OPENAI_API_KEY')
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
