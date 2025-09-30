@@ -1,6 +1,14 @@
-from goodwe import ligarCarregador, desligarCarregador, analiseInversor  # Funções que retornam textos para alexa da atividade
+from goodwe import (
+    ligarCarregador, desligarCarregador, analiseInversor,
+    ligarLuz, desligarLuz,
+    ligarArCondicionado, desligarArCondicionado,
+    ligarTomada, desligarTomada,
+    getConsumoMensal, getGeracaoDiaria, getStatusBateria,
+    getEnergiaRede, get_daily_inverter_generation,
+    get_average_battery_level, get_daily_data_range
+)
 from ia_engine import previsaoQuedaDeEnergiaAlexa  # Função que retorna o texto sobre previsão do tempo para Alexa
-from geocoding import get_coordinates # Função de conversão de estado para coordenadas
+from geocoding import get_coordinates  # Função de conversão de estado para coordenadas
 
 import os
 import json
@@ -85,29 +93,73 @@ def requisicao_alexa(dados):
         if tipo_requisicao == "LaunchRequest":
             resposta_texto = (
                 "Bem-vindo! Você pode me pedir as seguintes funcionalidades: "
-                "Ligar o carregador, Desligar o carregador, Previsão de queda de energia, "
-                "Informação de índice solar, Status da planta ou Dados do inversor"
+                "Ligar ou desligar o carregador, luz, ar-condicionado ou tomada. "
+                "Também pode pedir previsão de queda de energia, status da bateria, "
+                "geração solar ou consumo da casa."
             )
 
         # Caso o usuário tenha emitido um comando específico (intent)
         elif tipo_requisicao == "IntentRequest":
             intent_name = dados["request"]["intent"]["name"]  # Nome da intent solicitada
 
-            # Verifica qual intent foi solicitada e age de acordo
+            # ------------------- Carregador -------------------
             if intent_name == "StartChargingIntent":
                 resposta_texto = ligarCarregador()
 
             elif intent_name == "StopChargingIntent":
                 resposta_texto = desligarCarregador()
 
+            # ------------------- Clima -------------------
             elif intent_name == "CheckWeatherIntent":
                 return handle_check_weather(dados)
 
             elif intent_name == "GetStateIntent":
                 return handle_get_state(dados)
 
+            # ------------------- Inversor -------------------
             elif intent_name == "CheckInversorIntent":
                 resposta_texto = f"Esses são os dados obtidos da análise do inversor: {analiseInversor()}"
+
+            # ------------------- Equipamentos -------------------
+            elif intent_name == "LigarLuzIntent":
+                resposta_texto = ligarLuz()
+
+            elif intent_name == "DesligarLuzIntent":
+                resposta_texto = desligarLuz()
+
+            elif intent_name == "LigarArCondicionadoIntent":
+                resposta_texto = ligarArCondicionado()
+
+            elif intent_name == "DesligarArCondicionadoIntent":
+                resposta_texto = desligarArCondicionado()
+
+            elif intent_name == "LigarTomadaIntent":
+                resposta_texto = ligarTomada()
+
+            elif intent_name == "DesligarTomadaIntent":
+                resposta_texto = desligarTomada()
+
+            # ------------------- Energia -------------------
+            elif intent_name == "CheckConsumoMensalIntent":
+                resposta_texto = getConsumoMensal()
+
+            elif intent_name == "CheckGeracaoDiariaIntent":
+                resposta_texto = getGeracaoDiaria()
+
+            elif intent_name == "CheckStatusBateriaIntent":
+                resposta_texto = getStatusBateria()
+
+            elif intent_name == "CheckEnergiaRedeIntent":
+                resposta_texto = getEnergiaRede()
+
+            elif intent_name == "CheckDailyGenerationIntent":
+                resposta_texto = get_daily_inverter_generation()
+
+            elif intent_name == "CheckAverageBatteryIntent":
+                resposta_texto = get_average_battery_level()
+
+            elif intent_name == "CheckDataRangeIntent":
+                resposta_texto = get_daily_data_range()
 
             else:
                 resposta_texto = "Desculpe, não entendi seu comando."
