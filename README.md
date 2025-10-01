@@ -67,23 +67,28 @@ Essa combinação de conceitos permite que o projeto não só aplique conteúdos
 ```bash
 EnergyTime/
 |
-├── README.md           ← Relatório do projeto
-├── .env.example        ← Exemplo de variáveis de ambiente
-├── .gitignore          ← Ignora arquivos não versionados
-├── requirements.txt    ← Dependências do projeto
+├── README.md                     ← Relatório do projeto
+├── .env.example                  ← Exemplo de variáveis de ambiente
+├── .gitignore                    ← Ignora arquivos não versionados
+├── requirements.txt              ← Dependências do projeto
 |
 ├── backend/
-│   ├── main.py         ← Roteador principal (API Flask/FastAPI)
-│   ├── alexa_skill.py  ← Integração com Alexa
-│   ├── weather.py      ← Consumo da API OpenWeather
-│   ├── goodwe.py       ← Simulação de controle dos dispositivos GoodWe
-│   └── ia_engine.py    ← Motor de decisão com IA
+│   ├── main.py                   ← Roteador principal (API Flask/FastAPI)
+│   ├── alexa_skill.py            ← Integração com Alexa - processa intents e retorna respostas
+│   ├── weather.py                ← Consumo da API OpenWeather e tratamento dos dados climáticos
+│   ├── goodwe.py                 ← Simulação de controle dos dispositivos GoodWe
+│   ├── ia_engine.py              ← Motor de decisão com IA - previsão de quedas de energia (Random Forest)
+│   ├── energy_bot.py             ← Chatbot treinado com RAG para conversas sobre energia e equipamentos GoodWe
+│   └── geocoding.py              ← Conversão de localização (estado → latitude/longitude) para chamadas do OpenWeather
+│
+│   └── bases_de_dados/
+│       ├── equipamentos_e_plantas/   ← Dados sobre equipamentos GoodWe e plantas solares simuladas
+│       ├── infos_alexa/               ← Dados de teste para intents e respostas da Alexa
+│       └── modelo_queda_de_energia/   ← Bases de dados climáticas e históricas usadas para treinar o modelo de IA
 |
 ├── frontend/
-│   └── app.py          ← Interface web em Streamlit
-|
-└── docs/
-    └── fluxos.md       ← Descrição textual dos fluxos de integração
+│   └── app.py                     ← Interface web em Streamlit para visualização de dados, previsão da IA e testes manuais
+│   └── default_page.py            ← Interface web em Streamlit de apresentação com chatbot e botão de login
 ```
 ## 8. Instruções de Execução  
 
