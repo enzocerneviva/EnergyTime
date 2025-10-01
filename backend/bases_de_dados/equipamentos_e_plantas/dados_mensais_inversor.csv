@@ -1,0 +1,33 @@
+Data(Dias),Planta,Classificação,Capacidade(kW),Geração(kWh),Renda(EUR)
+01.08.2025,Grid-Tied PV Inverter,Residential,3,10.4,32760
+02.08.2025,Grid-Tied PV Inverter,Residential,3,9.4,29610
+03.08.2025,Grid-Tied PV Inverter,Residential,3,11.3,35595
+04.08.2025,Grid-Tied PV Inverter,Residential,3,7.9,24885
+05.08.2025,Grid-Tied PV Inverter,Residential,3,11.1,34965
+06.08.2025,Grid-Tied PV Inverter,Residential,3,14.8,46620
+07.08.2025,Grid-Tied PV Inverter,Residential,3,13.7,43155
+08.08.2025,Grid-Tied PV Inverter,Residential,3,15.6,49140
+09.08.2025,Grid-Tied PV Inverter,Residential,3,15.6,49140
+10.08.2025,Grid-Tied PV Inverter,Residential,3,16.9,53235
+11.08.2025,Grid-Tied PV Inverter,Residential,3,17.1,53865
+12.08.2025,Grid-Tied PV Inverter,Residential,3,14.8,46620
+13.08.2025,Grid-Tied PV Inverter,Residential,3,13.8,43470
+14.08.2025,Grid-Tied PV Inverter,Residential,3,16.1,50715
+15.08.2025,Grid-Tied PV Inverter,Residential,3,15.8,49770
+16.08.2025,Grid-Tied PV Inverter,Residential,3,10.6,33390
+17.08.2025,Grid-Tied PV Inverter,Residential,3,6.9,21735
+18.08.2025,Grid-Tied PV Inverter,Residential,3,12.6,39690
+19.08.2025,Grid-Tied PV Inverter,Residential,3,16.9,53235
+20.08.2025,Grid-Tied PV Inverter,Residential,3,12.7,40005
+21.08.2025,Grid-Tied PV Inverter,Residential,3,10.6,33390
+22.08.2025,Grid-Tied PV Inverter,Residential,3,7.3,22995
+23.08.2025,Grid-Tied PV Inverter,Residential,3,11.4,35910
+24.08.2025,Grid-Tied PV Inverter,Residential,3,13.2,41580
+25.08.2025,Grid-Tied PV Inverter,Residential,3,13.1,41265
+26.08.2025,Grid-Tied PV Inverter,Residential,3,10.7,33705
+27.08.2025,Grid-Tied PV Inverter,Residential,3,12.7,40005
+28.08.2025,Grid-Tied PV Inverter,Residential,3,8.3,26145
+29.08.2025,Grid-Tied PV Inverter,Residential,3,10.3,32445
+30.08.2025,Grid-Tied PV Inverter,Residential,3,12.4,39060
+31.08.2025,Grid-Tied PV Inverter,Residential,3,8.3,26145
+TOTAL,, ,--,382.3,1204245
