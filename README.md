@@ -1,117 +1,98 @@
-# EnergyTime | Challenge
+# EnergyTime | Challenge  
 
-## Sobre o Projeto
+## 1. Título do Projeto  
+**EnergyTime – Integração Inteligente de Dispositivos GoodWe com Alexa e Inteligência Artificial**  
 
-O **EnergyTime** é um projeto acadêmico desenvolvido como desafio da **GoodWe** em parceria com a **FIAP**.  
-O objetivo é criar uma aplicação que integre os equipamentos da GoodWe — como inversores, carregadores elétricos e baterias — com um assistente virtual, oferecendo controle inteligente e previsões baseadas em dados.  
+## 2. Equipe  
+- Enzo Cerneviva  
+- Gustavo Braga  
+- Murilo Arcanjo  
+- Rafael Costa  
 
-O projeto **está em desenvolvimento**, e o planejamento é implementar as seguintes funcionalidades na aplicação:
+## 3. Esquema de Integração dos Componentes  
+O projeto é dividido em **quatro grandes blocos**, integrados em fluxo contínuo:  
 
-1. **Integração com dispositivos GoodWe**  
-   O usuário poderá se comunicar com os equipamentos da GoodWe por comandos de voz via **Alexa**. Entre as ações previstas estão:  
-   - Consultar informações do inversor.  
-   - Ligar ou desligar dispositivos.  
-   - Executar outras funcionalidades do sistema integrado.  
+- **Interação com o usuário (Alexa)** → recebe comandos de voz.  
+- **Backend (Python + FastAPI/Flask)** → roteia requisições, processa intents e conecta módulos.  
+- **Módulos de integração**:  
+  - *GoodWe*: leitura e envio de comandos (simulados via portal GoodWe).  
+  - *OpenWeather*: coleta dados climáticos para alimentar a IA.  
+- **Módulo de Inteligência Artificial (ia_engine.py)** → processa dados, classifica risco de queda de energia e ajusta estratégias.  
+- **Frontend (Streamlit)** → interface web para:  
+  - Visualização de dados climáticos.  
+  - Resultados das previsões da IA.  
+  - Simulação manual de comandos (complementando a Alexa).  
 
-2. **Informações sobre horários de maior incidência solar** ***(Em desenvolvimento)***  
-   Com base na **localização geográfica**, o sistema determinará os horários de maior incidência solar e, portanto, maior geração de energia. A Alexa poderá:  
-   - Informar esses horários ao usuário.  
-   - Direcionar a energia gerada para equipamentos específicos durante o pico de produção.  
+### Fluxo Operacional (descrição textual)  
+1. Usuário faz um pedido à Alexa.  
+2. Alexa envia JSON ao backend.  
+3. Backend identifica a intent e consulta módulos internos (GoodWe, IA, clima).  
+4. IA processa dados e retorna classificação de risco (0/1).  
+5. Backend responde à Alexa ou atualiza o Streamlit com os dados.  
+6. Usuário recebe feedback por voz e/ou visual.  
 
-3. **Previsão de quedas de energia via Inteligência Artificial**  
-   O projeto inclui um modelo de IA capaz de prever possíveis quedas de energia com base em dados meteorológicos, como:  
-   - Data  
-   - Umidade relativa do ar  
-   - Volume de chuva (mm)  
-   - Velocidade do vento  
-   - Temperatura  
+## 4. Justificativa Técnica das Escolhas  
+- **Python**: por sua ampla biblioteca em IA, APIs e facilidade de integração.  
+- **Random Forest**: modelo robusto para classificação binária, eficiente em datasets pequenos/médios e fácil de interpretar.  
+- **Streamlit**: escolhido para o frontend por permitir prototipagem rápida, visualização clara e integração direta com Python.  
+- **Alexa Skills Kit**: garante automação via comandos de voz, ampliando acessibilidade e praticidade.  
+- **OpenWeather API**: fonte confiável e gratuita de dados meteorológicos para treinar e alimentar a IA.  
 
-   Com base em padrões históricos, o sistema alertará o usuário para se preparar — seja armazenando energia ou carregando equipamentos com antecedência.  
+## 5. Resultados e Dados Funcionais  
+- **Testes simulados com base de dados GoodWe** confirmaram o funcionamento dos módulos.  
+- **Alexa totalmente integrada**: todos os comandos de consulta e controle retornam respostas funcionais.  
+- **IA funcional em ambiente de simulação**: previsões retornam “0” (sem risco) ou “1” (risco alto), orientando decisões.  
+- **Frontend em desenvolvimento (Streamlit)**:  
+  - Visualização dos dados climáticos tratados.  
+  - Exibição da previsão da IA.  
+  - Interface para testes manuais de comandos.  
+- A simulação real do uso (Alexa + IA + protótipo) será exibida no vídeo de apresentação.  
 
-### Benefícios do EnergyTime
-- **Redução da emissão de CO₂**: incentivo ao uso de tecnologias que facilitam o aproveitamento da energia solar.  
-- **Eficiência energética**: permite direcionar a energia para onde ela é mais necessária, seja armazenada ou consumida.  
-- **Automação residencial**: integração com assistentes virtuais e controle inteligente de dispositivos.  
+## 6. Conexão com os Conteúdos da Disciplina  
+O projeto aplica conteúdos das disciplinas de:  
+- **Inteligência Artificial**: uso de Random Forest para previsão de quedas de energia.  
+- **Programação e Integração de Sistemas**: backend com Python, APIs externas e assistente virtual.  
+- **Automação e Energias Renováveis**: integração com inversores GoodWe e aproveitamento da geração solar.  
+- **Prototipagem de Interfaces**: uso de Streamlit para simulação e interação.  
 
-## 2. Organização da Aplicação
-
-A estrutura do projeto **EnergyTime** é a seguinte:
+## 7. Estrutura do Repositório  
 
 ```bash
 EnergyTime/
 |
-├── README.md           ← Documento explicativo do projeto (você está lendo agora)
-├── .env.example        ← Arquivo de exemplo com variáveis de ambiente, senhas e acessos
-├── .gitignore          ← Arquivo para ignorar arquivos não versionados
-├── requirements.txt    ← Arquivo com informações de ferramentas e bibliotecas utilizadas para importação
+├── README.md           ← Relatório do projeto
+├── .env.example        ← Exemplo de variáveis de ambiente
+├── .gitignore          ← Ignora arquivos não versionados
+├── requirements.txt    ← Dependências do projeto
 |
-└── backend/
-    ├── main.py         ← Roteador principal - cria o servidor com rotas HTTPS para comunicação com a Alexa
-
-    ├── alexa_skill.py  ← Integração com Alexa - processa requisições (Intents) em JSON e retorna respostas JSON
-
-    ├── weather.py      ← Dados climáticos - importa e trata previsões do OpenWeather para uso na IA
-
-    ├── goodwe.py       ← Simulação de leitura de dados e envio de comandos para equipamentos GoodWe
-
-    └── ia_engine.py    ← Motor de decisão com IA - treina modelo RandomForest para prever quedas de energia
-                          com base em dados climáticos históricos 
+├── backend/
+│   ├── main.py         ← Roteador principal (API Flask/FastAPI)
+│   ├── alexa_skill.py  ← Integração com Alexa
+│   ├── weather.py      ← Consumo da API OpenWeather
+│   ├── goodwe.py       ← Simulação de controle dos dispositivos GoodWe
+│   └── ia_engine.py    ← Motor de decisão com IA
+|
+├── frontend/
+│   └── app.py          ← Interface web em Streamlit
+|
+└── docs/
+    └── fluxos.md       ← Descrição textual dos fluxos de integração
 ```
+## 8. Instruções de Execução  
 
-## 3. Funcionamento
+1. Clone o repositório:  
+   git clone https://github.com/seu-usuario/EnergyTime.git  
+   cd EnergyTime  
 
-O fluxo pode ser dividido em 5 etapas principais:
+2. Configure as variáveis de ambiente no arquivo `.env`.  
 
-1. **Interação com o usuário (Alexa)**  
-   - O usuário faz um pedido de informação ou comando por voz.  
-   - A Alexa envia essa requisição em formato **JSON** para a aplicação.  
+3. Instale as dependências:  
+   pip install -r requirements.txt  
 
-2. **Roteamento e processamento inicial (`main.py` + `alexa_skill.py`)**  
-   - O `main.py` recebe a requisição e direciona para o módulo responsável.  
-   - O `alexa_skill.py` interpreta a *intent* da Alexa e prepara a resposta adequada.  
+4. Inicie o backend:  
+   python backend/main.py  
 
-3. **Coleta de dados externos**  
-   - O módulo `weather.py` acessa a API do **OpenWeather** para obter dados climáticos atualizados.  
-   - O módulo `goodwe.py` simula a leitura e o controle de dispositivos GoodWe.  
+5. Inicie o frontend (em outra aba):  
+   streamlit run frontend/app.py  
 
-4. **Decisão com Inteligência Artificial (`ia_engine.py`)**  
-   - O motor de IA processa os dados climáticos.  
-   - O modelo de **Random Forest** classifica se existe risco de queda de energia (0 = sem risco / 1 = risco alto).  
-   - A decisão influencia como o carregamento será gerenciado (imediato, agendado ou interrompido).  
-
-5. **Resposta ao usuário e execução de ações**  
-   - O sistema retorna um JSON de resposta à Alexa.  
-   - O usuário recebe feedback por voz.  
-   - Se necessário, comandos são enviados para os dispositivos GoodWe.
-  
-## 4. Tecnologias Utilizadas
-
-O **EnergyTime** foi desenvolvido utilizando um conjunto de linguagens, frameworks e serviços para integração entre IA, APIs externas e assistente virtual.
-
-### 🔹 Linguagem de Programação
-- **Python**: base principal da aplicação.
-
-### 🔹 Frameworks e Bibliotecas
-- **Flask / FastAPI**: criação de servidor e APIs para comunicação com a Alexa.
-- **scikit-learn**: implementação do modelo de Machine Learning (Random Forest).
-- **Requests**: consumo de APIs externas (clima e dispositivos).
-
-### 🔹 Inteligência Artificial
-- **Random Forest Classifier**: modelo de classificação binária para prever quedas de energia.
-- **Pandas**: manipulação e análise de dados.
-
-### 🔹 APIs Externas
-- **OpenWeather**: dados climáticos em tempo real para alimentar a IA.
-
-### 🔹 Integração
-- **Alexa Skills Kit**: criação de intents e respostas para interação por voz.
-- **Render**: hospedagem da aplicação em nuvem com acesso via HTTPS.
-
----
-
-## 👥 Equipe
-- Enzo Cerneviva
-- Gustavo Braga
-- Murilo Arcanjo
-- Rafael Costa
-
+6. Configure a Alexa Skill apontando para o backend.  
