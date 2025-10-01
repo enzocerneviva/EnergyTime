@@ -48,12 +48,19 @@ O projeto é dividido em **quatro grandes blocos**, integrados em fluxo contínu
   - Interface para testes manuais de comandos.  
 - A simulação real do uso (Alexa + IA + protótipo) será exibida no vídeo de apresentação.  
 
-## 6. Conexão com os Conteúdos da Disciplina  
-O projeto aplica conteúdos das disciplinas de:  
-- **Inteligência Artificial**: uso de Random Forest para previsão de quedas de energia.  
-- **Programação e Integração de Sistemas**: backend com Python, APIs externas e assistente virtual.  
-- **Automação e Energias Renováveis**: integração com inversores GoodWe e aproveitamento da geração solar.  
-- **Prototipagem de Interfaces**: uso de Streamlit para simulação e interação.  
+## 6. Conexão com os Conteúdos da Disciplina
+
+O projeto EnergyTime integra diversos conteúdos aprendidos na disciplina, aplicando-os de forma prática e aproximando conceitos teóricos da experiência do usuário:
+
+- **Conceitos de Energia e Automação**: o sistema permite que o usuário visualize e gerencie de forma prática a geração e o consumo de energia, mostrando horários de maior incidência solar e como a energia pode ser direcionada ou armazenada. Isso aproxima conceitos de eficiência energética e aproveitamento de recursos renováveis do uso cotidiano.
+
+- **Inteligência Artificial e Previsão de Quedas de Energia**: o modelo de IA implementado em `ia_engine.py` utiliza técnicas de **Random Forest** para prever possíveis quedas de energia com base em dados climáticos. Além disso, estamos desenvolvendo o **Energy Bot (`energy_bot.py`)**, um chatbot que integra previsões, alertas e sugestões para o usuário, aproximando a IA da interação direta com o sistema.
+
+- **Programação e Integração de Sistemas**: o backend em Python coordena APIs externas, módulos de controle de dispositivos GoodWe e integração com a Alexa, garantindo comunicação confiável e em tempo real entre todos os componentes do sistema.
+
+- **Prototipagem de Interfaces (Frontend)**: o Streamlit é utilizado para criar um frontend interativo, permitindo que o usuário visualize dados, resultados das previsões da IA e simule comandos manualmente. Isso oferece uma camada visual e prática que complementa a automação via Alexa.
+
+Essa combinação de conceitos permite que o projeto não só aplique conteúdos acadêmicos, mas também demonstre na prática como sistemas inteligentes podem otimizar o uso de energia e facilitar a experiência do usuário. 
 
 ## 7. Estrutura do Repositório  
 
