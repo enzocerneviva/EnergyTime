@@ -7,10 +7,10 @@ from datetime import datetime, timedelta
 # Carregamento dos dados
 # -----------------------------
 # CSVs (ajuste caminhos se estiver no Colab)
-dados_mensais_inversor = pd.read_csv('base_de_dados/equipamentos_e_plantas/dados_mensais_inversor.csv')
-dados_mensais_bauner = pd.read_csv('base_de_dados/equipamentos_e_plantas/dados_mensais_bauner.csv')
-dados_bateria_diario = pd.read_csv('base_de_dados/equipamentos_e_plantas/dados_bateria_diario.csv')
-dados_inversor_diario = pd.read_csv('base_de_dados/equipamentos_e_plantas/dados_inversor_diario.csv')
+dados_mensais_inversor = pd.read_csv('bases_de_dados/equipamentos_e_plantas/dados_mensais_inversor.csv')
+dados_mensais_bauner = pd.read_csv('bases_de_dados/equipamentos_e_plantas/dados_mensais_bauner.csv')
+dados_bateria_diario = pd.read_csv('bases_de_dados/equipamentos_e_plantas/dados_bateria_diario.csv')
+dados_inversor_diario = pd.read_csv('bases_de_dados/equipamentos_e_plantas/dados_inversor_diario.csv')
 
 # -----------------------------
 # Tratamento de dados
