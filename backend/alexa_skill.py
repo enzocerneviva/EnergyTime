@@ -1,5 +1,5 @@
 from goodwe import (
-    ligarCarregador, desligarCarregador, analiseInversor,
+    ligarCarregador, desligarCarregador, analiseInversor_csv,
     ligarLuz, desligarLuz,
     ligarArCondicionado, desligarArCondicionado,
     ligarTomada, desligarTomada,
@@ -118,7 +118,7 @@ def requisicao_alexa(dados):
 
             # ------------------- Inversor -------------------
             elif intent_name == "CheckInversorIntent":
-                resposta_texto = f"Esses são os dados obtidos da análise do inversor: {analiseInversor()}"
+                resposta_texto = f"Esses são os dados obtidos da análise do inversor: {analiseInversor_csv()}"
 
             # ------------------- Equipamentos -------------------
             elif intent_name == "LigarLuzIntent":
