@@ -74,121 +74,148 @@ if paginas == "☰ Sobre":
         st.image("logo_goodwe.png", width=150)
 
 
-elif paginas == "📊 Análises":
+import streamlit as st
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
 
-    st.title("📊 Visualização dos Dados")
-    st.markdown("---")
+# Configuração da página
+st.set_page_config(layout="centered")
+st.title("Equipamentos Goodwe")
+
+# --- FUNÇÃO 1: RELATÓRIO MENSAL (Seu Código Original) ---
+def show_battery_data_monthly():
+    """Processa e exibe o Relatório Mensal da Bateria."""
     
-    st.markdown("## Análise Mensal de Consumo e Geração Solar")
- 
-    # --- Carregar a planilha mensal ---
+    file_path = 'BaseDeDados_BATERIA_MENSAL.xls'
+    
     try:
-        df = pd.read_excel("content/BaseDeDados_BATERIA_MENSAL.xls", header=None)
-    
-        # Assuming the header is in the 21st row (index 20) based on previous cells
-        df.columns = ["Monthly Report", "Plant", "Classification", "Capacity(kW)", "PV(kWh)", "Sell(kWh)", "Buy(kWh)", "Consumption(kWh)", "In-House(kWh)", "Self-Cons. Ratio(%)", "Contribution Ratio(%)", "Income(EUR)"]
-    
-        # Remove unnecessary rows (up to row 20 and the last row) and the row with 'Date'
-        df = df.iloc[21:-1].copy()
-    
-        # Convert 'Monthly Report' to datetime
-        df["Monthly Report"] = pd.to_datetime(df["Monthly Report"], format="%d.%m.%Y")
-    
-        # Garantindo que as colunas numéricas sejam float (substitui vírgula por ponto se necessário)
-        df["PV(kWh)"] = df["PV(kWh)"].astype(str).str.replace(",", ".").astype(float)
-        df["Consumption(kWh)"] = df["Consumption(kWh)"].astype(str).str.replace(",", ".").astype(float)
-    
-        # --- Gráfico comparando PV e Consumo com Streamlit ---
-        st.subheader("Geração Solar x Consumo de Energia Mensal")
-    
-        # Para usar st.line_chart, o eixo x deve ser o índice ou uma coluna numérica/datetime
-        df_indexed = df.set_index("Monthly Report")
-    
-        st.line_chart(df_indexed[["PV(kWh)", "Consumption(kWh)"]])
-    
-    
-        # --- Exibindo Totais com Streamlit ---
-        total_consumption = df['Consumption(kWh)'].sum()
-        total_solar_production = df['PV(kWh)'].sum()
-    
-        st.subheader("Totais Mensais")
-        st.write(f"Consumo Total do Local (Mensal): {total_consumption:.2f} kWh")
-        st.write(f"Produção Solar Total (PV) (Mensal): {total_solar_production:.2f} kWh")
-    
+        df = pd.read_excel(file_path, engine="xlrd", header=None)
     except FileNotFoundError:
-        st.error("Erro: O arquivo 'BaseDeDados_BATERIA_MENSAL.xls' não foi encontrado. Por favor, carregue o arquivo no ambiente do Colab.")
-    except Exception as e:
-        st.error(f"Ocorreu um erro: {e}")
+        st.error(f"ERRO: O arquivo '{file_path}' (Mensal) não foi encontrado. Verifique o caminho.")
+        return
+    
+    # Processamento e Limpeza de Dados
+    df.columns = ["Monthly Report", "Plant", "Classification", "Capacity(kW)", "PV(kWh)", "Sell(kWh)", "Buy(kWh)", "Consumption(kWh)", "In-House(kWh)", "Self-Cons. Ratio(%)", "Contribution Ratio(%)", "Income(EUR)"]
+    df = df.iloc[20:-1].copy()
 
-    st.markdown("## Análise de Consumo e Geração Solar Diária")
- 
-    # --- Carregando dados do arquivo Excel ---
-    try:
-        df = pd.read_excel("content/BaseDeDados_BATERIA_DIARIA.xls", header=1) # Assuming the header is in the second row
+    cols_to_convert = ['Consumption(kWh)', 'PV(kWh)', 'Income(EUR)', 'Buy(kWh)', 'Sell(kWh)']
+    for col in cols_to_convert:
+        df[col] = pd.to_numeric(df[col], errors='coerce')
     
-        # Renomeando as colunas para facilitar o acesso (ajuste conforme o nome exato no seu arquivo)
-        df.columns = ["Time", "PV(W)", "SOC(%)", "Battery(W)", "Grid (W)", "Load(W)"]
+    df.dropna(subset=cols_to_convert, inplace=True) 
     
-        # Remover a primeira linha que contém os nomes das colunas originais
-        df = df.iloc[1:].copy()
+    df['Monthly Report'] = pd.to_datetime(df['Monthly Report'], format='%d.%m.%Y', errors='coerce')
+    df.dropna(subset=['Monthly Report'], inplace=True)
     
-    
-        # Convertendo a coluna Time para datetime
-        df["Time"] = pd.to_datetime(df["Time"], format="%d.%m.%Y %H:%M:%S")
-    
-        # Garantindo que os números sejam float (substitui vírgula por ponto se necessário)
-        df["PV(W)"] = df["PV(W)"].astype(str).str.replace(",", ".").astype(float)
-        df["Load(W)"] = df["Load(W)"].astype(str).str.replace(",", ".").astype(float)
+    # Cálculos
+    total_monthly_consumption_bat = df['Consumption(kWh)'].sum()
+    number_of_days_bat = len(df)
+    daily_average_consumption_bat = total_monthly_consumption_bat / number_of_days_bat
+    total_income_bat = df['Income(EUR)'].sum()
+    total_monthly_buy = df['Buy(kWh)'].sum()
+    total_monthly_sell = df['Sell(kWh)'].sum()
+    daily_average_buy = total_monthly_buy / number_of_days_bat
+    daily_average_sell = total_monthly_sell / number_of_days_bat
 
-        # --- Plotando com Streamlit ---
-        st.subheader("Consumo vs Geração Solar ao longo do dia")
-    
-        # Para usar st.line_chart, o eixo x deve ser o índice ou uma coluna numérica/datetime
-        # Vamos definir 'Time' como índice para o gráfico
-        df_indexed = df.set_index("Time")
-    
-        st.line_chart(df_indexed[["PV(W)", "Load(W)"]])
-    
-        # --- Exibindo Totais ---
-        total_daily_consumption = df['Load(W)'].sum()
-        total_daily_solar_production = df['PV(W)'].sum()
-    
-        st.subheader("Totais Diários")
-        st.write(f"Consumo Total Diário do Local: {total_daily_consumption:.2f} W")
-        st.write(f"Produção Solar Total Diária (PV): {total_daily_solar_production:.2f} W")
-    
-    except FileNotFoundError:
-        st.error("Erro: O arquivo 'BaseDeDados_BATERIA_DIARIA.xls' não foi encontrado. Por favor, carregue o arquivo no ambiente do Colab.")
-    except Exception as e:
-        st.error(f"Ocorreu um erro: {e}")
+    # Exibição do Gráfico
+    st.subheader("Gráfico de Consumo e Produção (Mensal)")
+    fig, ax = plt.subplots(figsize=(10, 5))
+    sns.lineplot(data=df, x='Monthly Report', y='Consumption(kWh)', label='Consumo (Bateria)', ax=ax)
+    sns.lineplot(data=df, x='Monthly Report', y='PV(kWh)', label='Produção (Bateria)', ax=ax)
+    ax.set_xlabel('Data')
+    ax.set_ylabel('Valor (kWh)')
+    ax.set_title('Consumo e Produção da Bateria (Dados Mensais)')
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    st.pyplot(fig) 
 
-elif paginas == "🔌 Equipamentos GoodWe":
-    st.title("🔌 Informações sobre os Equipamentos")
-    st.markdown("---")
-
-    # Primeira linha
-    col1, col2 = st.columns(2)
-
+    # Exibição das Métricas
+    st.subheader("Métricas de Desempenho")
+    col1, col2, col3 = st.columns(3)
+    
     with col1:
-        st.markdown("### INVERSOR DA CASA")
-        st.metric(label="Potência", value="~68 kW", delta="Últimos 5 min")
-        
+        st.metric("Consumo Mensal Total", f"{total_monthly_consumption_bat:,.2f} kWh")
+        st.metric("Consumo Médio Diário", f"{daily_average_consumption_bat:,.2f} kWh")
+
     with col2:
-        st.markdown("### BATERIA DA CASA")
-        st.metric(label="Carga Atual", value="~72%", delta="No momento")
-
-    st.markdown("")
-
-    # Segunda linha
-    col3, col4 = st.columns(2)
-
+        st.metric("Renda Mensal Total", f"{total_income_bat:,.2f} EUR")
+        st.metric("Energia Total Vendida", f"{total_monthly_sell:,.2f} kWh")
+        
     with col3:
-        st.markdown("### CRÉDITOS NO DIA")
-        st.metric(label="Economia", value="~35 EUR", delta="Acumulado hoje")
+        st.metric("Energia Total Comprada", f"{total_monthly_buy:,.2f} kWh")
+        st.metric("Energia Média Diária Comprada", f"{daily_average_buy:,.2f} kWh")
+        st.write(f"Energia Média Diária Vendida: **{daily_average_sell:.2f} kWh**")
 
-    with col4:
-        st.markdown("### CONSUMO DA CASA")
-        st.metric(label="Potência", value="~50 kW", delta="Últimos 5 min")
+
+# --- FUNÇÃO 2: RELATÓRIO DIÁRIO (ADAPTE SEU CÓDIGO AQUI) ---
+def show_battery_data_daily():
+    """
+    Processa e exibe o Relatório Diário da Bateria.
+    
+    NOTA: O CÓDIGO ABAIXO É UM EXEMPLO GENÉRICO. VOCÊ DEVE SUBSTITUÍ-LO
+    INTEIRAMENTE PELO SEU CÓDIGO DE PROCESSAMENTO DO RELATÓRIO DIÁRIO.
+    """
+    st.header("Relatório Diário")
+    
+    file_path_daily = 'BaseDeDados_BATERIA_DIARIA.xls'
+    
+    try:
+        # Tenta carregar o arquivo diário
+        df_daily = pd.read_excel(file_path_daily, engine="xlrd", header=None)
+    except FileNotFoundError:
+        st.error(f"ERRO: O arquivo '{file_path_daily}' (Diário) não foi encontrado. Verifique o caminho.")
+        return
+    
+    # --------------------------------------------------------
+    # *** SUBSTITUA ESTA SEÇÃO PELO SEU CÓDIGO DE PROCESSAMENTO DIÁRIO! ***
+    # --------------------------------------------------------
+    st.info("Aqui entrará o seu **código completo de processamento de dados diários**, incluindo limpeza, cálculos, e as chamadas do Streamlit (`st.pyplot`, `st.metric`, etc.) para exibir os resultados.")
+    st.markdown("Exemplo de como ficaria a exibição de dados e gráficos:")
+    
+    # Exemplo: Simulação de Gráfico Diário
+    st.subheader("Gráfico de Exemplo (Diário)")
+    data_exemplo = pd.DataFrame({
+        'Dia': pd.to_datetime(['2025-01-01', '2025-01-02', '2025-01-03']),
+        'Geração': [10.5, 12.1, 9.8],
+        'Consumo': [8.0, 7.5, 8.5]
+    })
+    
+    fig_daily, ax_daily = plt.subplots(figsize=(10, 5))
+    sns.lineplot(data=data_exemplo, x='Dia', y='Geração', label='Geração', ax=ax_daily)
+    sns.lineplot(data=data_exemplo, x='Dia', y='Consumo', label='Consumo', ax=ax_daily)
+    ax_daily.set_title('Consumo e Produção da Bateria (Dados Diários - Simulação)')
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    st.pyplot(fig_daily)
+    # --------------------------------------------------------
+
+
+# --- ESTRUTURA PRINCIPAL COM OS EXPANDERS (O Layout do "V") ---
+
+# 1. EXPANDER PRINCIPAL PARA O INVERSOR
+with st.expander("Inversor"):
+    # Espaço para o Inversor (você pode colocar relatórios Mensal/Diário aqui também)
+    st.subheader("Dados do inversor aqui")
+    st.info("Coloque a chamada para o relatório do Inversor aqui.")
+
+st.markdown("---") 
+
+# 2. EXPANDER PRINCIPAL PARA A BATERIA
+with st.expander("Bateria", expanded=True): # Inicia ABERTO para a Bateria, como na imagem
+    
+    st.header("Relatórios Detalhados da Bateria")
+    
+    # EXPANDER ANINHADO 1: RELATÓRIO MENSAL
+    with st.expander("Relatório Mensal", expanded=True): # Inicia ABERTO
+        show_battery_data_monthly()
+
+    st.markdown("---") # Linha divisória
+    
+    # EXPANDER ANINHADO 2: RELATÓRIO DIÁRIO
+    with st.expander("Relatório Diário"): # Inicia FECHADO
+        show_battery_data_daily()
     
     st.markdown("""  
   """)
