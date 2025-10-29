@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from alexa_skill import requisicao_alexa
-from requisicoes_e_respostas import salvar_dados, carregar_historico
+from id_localizacao import salvar_dados, carregar_historico
 
 app = Flask(__name__)
 

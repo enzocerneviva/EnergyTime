@@ -7,10 +7,15 @@ from datetime import datetime, timedelta
 # Carregamento dos dados
 # -----------------------------
 # CSVs (ajuste caminhos se estiver no Colab)
-dados_mensais_inversor = pd.read_csv('bases_de_dados/equipamentos_e_plantas/dados_mensais_inversor.csv')
-dados_mensais_bauner = pd.read_csv('bases_de_dados/equipamentos_e_plantas/dados_mensais_bauner.csv')
-dados_bateria_diario = pd.read_csv('bases_de_dados/equipamentos_e_plantas/dados_bateria_diario.csv')
-dados_inversor_diario = pd.read_csv('bases_de_dados/equipamentos_e_plantas/dados_inversor_diario.csv')
+caminho_dados_mensais_inversor = os.path.join(os.path.dirname(__file__), 'bases_de_dados', 'equipamentos_e_plantas', 'dados_mensais_inversor.csv')
+caminho_dados_mensais_bauner = os.path.join(os.path.dirname(__file__), 'bases_de_dados', 'equipamentos_e_plantas', 'dados_mensais_bauner.csv')
+caminho_dados_bateria_diario = os.path.join(os.path.dirname(__file__), 'bases_de_dados', 'equipamentos_e_plantas', 'dados_bateria_diario.csv')
+caminho_dados_inversor_diario = os.path.join(os.path.dirname(__file__), 'bases_de_dados', 'equipamentos_e_plantas', 'dados_inversor_diario.csv')
+
+dados_mensais_inversor = pd.read_csv(caminho_dados_mensais_inversor)
+dados_mensais_bauner = pd.read_csv(caminho_dados_mensais_bauner)
+dados_bateria_diario = pd.read_csv(caminho_dados_bateria_diario)
+dados_inversor_diario = pd.read_csv(caminho_dados_inversor_diario)
 
 # -----------------------------
 # Tratamento de dados
