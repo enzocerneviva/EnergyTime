@@ -64,18 +64,48 @@ def handle_check_weather(dados):
 
 def handle_get_state(dados):
     user_id = dados["session"]["user"]["userId"]
-    estado = dados["request"]["intent"]["slots"]["estado"]["values"]["id"]
-    print(dados)
 
-    # salvar no JSON
+    # Captura o slot do estado falado
+    estado_slot = dados["request"]["intent"]["slots"]["estado"]
+
+    # Tenta extrair o ID do estado a partir das resoluções
+    try:
+        estado_id = (
+            estado_slot["resolutions"]["resolutionsPerAuthority"][0]["values"][0]["value"]["id"]
+        )
+    except (KeyError, IndexError, TypeError):
+        estado_id = None
+
+    # Valor literal que o usuário falou
+    estado_valor = estado_slot.get("value", "desconhecido")
+
+    print(f"DEBUG Alexa Slot Estado: valor={estado_valor}, id={estado_id}")
+    print(f"RAW Alexa request: {dados}")  # útil para debugar estrutura real do slot
+
+    # Se não conseguir identificar o estado
+    if not estado_id:
+        resposta_texto = (
+            f"Desculpe, não consegui identificar o estado '{estado_valor}'. "
+            "Você pode repetir o nome do estado?"
+        )
+        return {
+            "version": "1.0",
+            "response": {
+                "outputSpeech": {"type": "PlainText", "text": resposta_texto},
+                "shouldEndSession": False
+            }
+        }
+
+    # Salva o ID do estado no JSON
     dadosIdLocation = carregar_dados()
-    dadosIdLocation[user_id] = estado
+    dadosIdLocation[user_id] = estado_id
     salvar_dados(dadosIdLocation)
 
-    # já responde com previsão
-    lat, lon = get_coordinates(estado)
-    resposta_texto = previsaoQuedaDeEnergiaAlexa(lat, lon, estado)
+    # Obtém coordenadas e previsão com base no ID
+    lat, lon = get_coordinates(estado_id)
+    resposta_texto = previsaoQuedaDeEnergiaAlexa(lat, lon, estado_id)
 
+    # Retorna resposta final da Alexa
     return {
         "version": "1.0",
         "response": {
@@ -83,6 +113,7 @@ def handle_get_state(dados):
             "shouldEndSession": True
         }
     }
+
 
 
 # Função principal para tratar as requisições da Alexa
