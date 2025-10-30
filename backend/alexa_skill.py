@@ -64,7 +64,8 @@ def handle_check_weather(dados):
 
 def handle_get_state(dados):
     user_id = dados["session"]["user"]["userId"]
-    estado = dados["request"]["intent"]["slots"]["estado"]["id"]
+    estado = dados["request"]["intent"]["slots"]["estado"]["values"]["id"]
+    print(dados)
 
     # salvar no JSON
     dadosIdLocation = carregar_dados()
