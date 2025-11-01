@@ -3,6 +3,8 @@
 import os
 from flask import Flask, request, jsonify
 from openai import OpenAI
+import pandas as pd
+import json
 
 # Nossos módulos locais
 from alexa_skill import requisicao_alexa
@@ -11,6 +13,15 @@ import chatbot  # Nosso novo módulo de IA
 
 # --- INICIALIZAÇÃO DO SERVIDOR ---
 app = Flask(__name__)
+
+USER_DB_PATH = os.path.join(os.path.dirname(__file__), 'bases_de_dados', 'usuarios.json')
+
+def carregar_utilizadores():
+    try:
+        with open(USER_DB_PATH, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return {} # Retorna vazio se o ficheiro não existi
 
 # 1. Carregar chave da API (NUNCA DEIXE NO CÓDIGO)
 #    (No seu terminal, rode: set OPENAI_API_KEY=sua_chave_aqui)
@@ -77,6 +88,30 @@ def handle_chat_ia():
     return jsonify({"resposta": resposta_ia})
 # --- FIM DA NOVA ROTA ---
 
+# --- Rota de Login (NOVA) ---
+@app.route("/login", methods=["POST"])
+def handle_login():
+    dados = request.get_json()
+    utilizadores = carregar_utilizadores()
+    
+    usuario_input = dados.get("usuario")
+    senha_input = dados.get("senha")
+
+    if not usuario_input or not senha_input:
+        return jsonify({"erro": "Utilizador e senha são obrigatórios"}), 400
+
+    # Verifica se o utilizador existe no JSON
+    utilizador_db = utilizadores.get(usuario_input)
+    
+    if utilizador_db and utilizador_db["senha"] == senha_input:
+        # Sucesso no login
+        return jsonify({
+            "sucesso": True,
+            "user_id": utilizador_db["user_id"]
+        }), 200
+    else:
+        # Falha no login
+        return jsonify({"erro": "Utilizador ou senha inválidos"}), 401
 
 if __name__ == "__main__":
     # A porta 10000 do seu código original

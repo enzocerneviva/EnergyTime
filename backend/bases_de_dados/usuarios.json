@@ -1,0 +1,10 @@
+{
+  "user": {
+    "senha": "pass123",
+    "user_id": "user_demo"
+  },
+  "admin": {
+    "senha": "admin",
+    "user_id": "admin_energy"
+  }
+}

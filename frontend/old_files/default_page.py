@@ -126,7 +126,8 @@ st.markdown(
 # ===================================================================
 
 # URL do nosso backend Flask (rodando na porta 10000)
-URL_BACKEND_CHAT = "http://127.0.0.1:10000/chat_ia"
+URL_BACKEND_CHAT_LOCAL = "http://127.0.0.1:10000/chat_ia"
+URL_BACKEND_CHAT_RENDER = "https://energytime-challenge-01.onrender.com/chat_ia"
 
 # --- 1. Lógica de Créditos e Histórico (Mantida) ---
 if "creditos" not in st.session_state:
@@ -164,7 +165,7 @@ if user_input := st.chat_input(placeholder_texto, disabled=input_desabilitado):
     with st.spinner("EnergyTime IA está pensando..."):
         try:
             response = requests.post(
-                URL_BACKEND_CHAT,
+                URL_BACKEND_CHAT_RENDER,
                 json={"pergunta": user_input}
             )
             response.raise_for_status() 
